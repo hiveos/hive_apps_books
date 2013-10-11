@@ -45,11 +45,14 @@ public class MainActivity extends ListActivity {
         else
         {
             File file = new File(items.get(selectedRow));
+            String imeFajla = file.getName().toString();
+            String ekstenzijaFajla = imeFajla.substring((imeFajla.lastIndexOf(".") + 1), imeFajla.length());
+            
             if(file.isDirectory())
             {
                 getFiles(file.listFiles());
             }
-            else if(file.isFile())
+            else if (file.isFile() && ekstenzijaFajla.equals("pdf"))
             {
             	File bookRoot = new File(file.getPath());
             	Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -61,7 +64,7 @@ public class MainActivity extends ListActivity {
             else
             {
                  new AlertDialog.Builder(this)
-                 .setTitle("This file is not supported")
+                 .setTitle(ekstenzijaFajla + " files are not supported ")
                  .setNeutralButton("OK", new DialogInterface.OnClickListener(){
                      public void onClick(DialogInterface dialog, int button){
                          //do nothing
@@ -69,11 +72,12 @@ public class MainActivity extends ListActivity {
                  })
                  .show();
             }
+            
         }
     }
     private void getFiles(File[] files){
         items = new ArrayList<String>();
-        items.add("..");
+        items.add("Go back");
         for(File file : files){
             items.add(file.getPath());
         }

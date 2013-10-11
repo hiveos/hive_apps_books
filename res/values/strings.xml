@@ -4,5 +4,7 @@
     <string name="app_name">Hive Books</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="title_activity_glavna">Glavna</string>
 
 </resources>
