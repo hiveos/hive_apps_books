@@ -26,7 +26,24 @@ public class MainActivity extends ListActivity {
     
     private List<String> items = null;
     private File whereToCopy = new File(Environment.getExternalStorageDirectory()+"/HIVE/Books/");
-       
+    public Glavna glavnaObjekt;
+    
+    public void kopirajFajl(File sourceLocation, File targetLocation) throws IOException
+	{		
+		InputStream in = new FileInputStream(sourceLocation);
+        OutputStream out = new FileOutputStream(targetLocation);
+
+        // Copy the bits from instream to outstream
+        byte[] buf = new byte[1024];
+        int len;
+        while ((len = in.read(buf)) > 0) {
+            out.write(buf, 0, len);
+        }
+        in.close();
+        out.close();
+	}
+    
+    
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -55,10 +72,40 @@ public class MainActivity extends ListActivity {
             else if (file.isFile() && ekstenzijaFajla.equals("pdf"))
             {
             	File bookRoot = new File(file.getPath());
-            	Intent intent = new Intent(Intent.ACTION_VIEW);
-            	intent.setDataAndType(Uri.fromFile(bookRoot),"application/pdf");
-            	intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            	startActivity(intent);
+            	File targetLocation = new File (Glavna.sdCard + "/HIVE/Books/"+imeFajla);
+            	
+            	if(!bookRoot.toString().equals(targetLocation.toString()))
+            	{
+            	
+	            	if(!targetLocation.exists()){
+						try {
+							targetLocation.createNewFile();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+	            	
+	            	try {
+						kopirajFajl(bookRoot, targetLocation);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	            	
+	            	Intent intent = new Intent(Intent.ACTION_VIEW);
+	            	intent.setDataAndType(Uri.fromFile(targetLocation),"application/pdf");
+	            	intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+	            	startActivity(intent);
+            	}
+            	
+            	if(bookRoot.toString().equals(targetLocation.toString()))
+            	{
+            		Intent intent = new Intent(Intent.ACTION_VIEW);
+	            	intent.setDataAndType(Uri.fromFile(targetLocation),"application/pdf");
+	            	intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+	            	startActivity(intent);
+            	}
             	
             }
             else
