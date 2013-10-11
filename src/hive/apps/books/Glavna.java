@@ -1,8 +1,7 @@
-package com.example.hivebooks;
+package hive.apps.books;
 
 import java.util.ArrayList;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
