@@ -1,56 +1,83 @@
 package com.example.hivebooks;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
+import android.app.AlertDialog;
+import android.app.ListActivity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.app.Activity;
-import android.content.Intent;
-import android.view.Menu;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-public class MainActivity extends Activity {
-	
-	String bookName;
-	EditText edittekst;
-	Button button1;
-	File bookRoot;
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		edittekst=(EditText)findViewById(R.id.editText1);
-		button1=(Button)findViewById(R.id.button1);
-		
-		bookRoot = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/HIVE/Books/");
-		if(!bookRoot.exists()){
-			bookRoot.mkdirs();
-		}
-		
-		button1.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				bookName=edittekst.getText().toString();
-				File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/HIVE/Books/"+bookName+".pdf");
-				Intent intent = new Intent(Intent.ACTION_VIEW);
-				intent.setDataAndType(Uri.fromFile(file), "application/pdf");
-				intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-				startActivity(intent);
-				
-			}
-		});		
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
+public class MainActivity extends ListActivity {
+    
+    private List<String> items = null;
+    private File whereToCopy = new File(Environment.getExternalStorageDirectory()+"/HIVE/Books/");
+       
+    @Override
+    public void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
+        setContentView(R.layout.activity_main);
+        if(!whereToCopy.exists()) whereToCopy.mkdirs();
+        getFiles(new File(Environment.getExternalStorageDirectory()+"/").listFiles());
+    }
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id){
+        int selectedRow = (int)id;
+        
+        if(selectedRow == 0){
+            getFiles(new File(Environment.getExternalStorageDirectory()+"/").listFiles());
+        }
+        
+        else
+        {
+            File file = new File(items.get(selectedRow));
+            if(file.isDirectory())
+            {
+                getFiles(file.listFiles());
+            }
+            else if(file.isFile())
+            {
+            	File bookRoot = new File(file.getPath());
+            	Intent intent = new Intent(Intent.ACTION_VIEW);
+            	intent.setDataAndType(Uri.fromFile(bookRoot),"application/pdf");
+            	intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            	startActivity(intent);
+            	
+            }
+            else
+            {
+                 new AlertDialog.Builder(this)
+                 .setTitle("This file is not supported")
+                 .setNeutralButton("OK", new DialogInterface.OnClickListener(){
+                     public void onClick(DialogInterface dialog, int button){
+                         //do nothing
+                     }
+                 })
+                 .show();
+            }
+        }
+    }
+    private void getFiles(File[] files){
+        items = new ArrayList<String>();
+        items.add("..");
+        for(File file : files){
+            items.add(file.getPath());
+        }
+        ArrayAdapter<String> fileList = new ArrayAdapter<String>(this,R.layout.file_list_row, items);
+        setListAdapter(fileList);
+    }
 }
