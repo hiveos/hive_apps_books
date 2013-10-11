@@ -4,14 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/texture_wood"
     tools:context=".Glavna" >
-<!--
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Click button to open PDF"
-        android:textSize="20dp" />
--->
+
 		<ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
@@ -23,15 +16,6 @@
             android:layout_height="match_parent"
             android:layout_gravity="top"
             android:orientation="vertical" >
-            
-            <Button
-				        android:id="@+id/button1"
-				        android:layout_width="match_parent"
-				        android:layout_height="wrap_content"
-				        android:layout_alignLeft="@+id/textView1"
-				        android:layout_alignParentRight="true"
-				        android:layout_below="@+id/textView1"
-				        android:text="Open PDF file" />
             
 	            <LinearLayout
 	            android:id="@+id/ShelfHolder"
