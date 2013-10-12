@@ -89,8 +89,8 @@ public class Glavna extends Activity implements OnClickListener, OnLongClickList
 			ukupniKnjigaCounter++;
 			knjigaParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
                     LayoutParams.WRAP_CONTENT);
-			knjigaParams.leftMargin = 40;
-            knjigaParams.bottomMargin = 25;
+			knjigaParams.leftMargin = 30;
+            knjigaParams.bottomMargin = 20;
             knjigaParams.topMargin = 15;
             police.get(policaNaKojojSeNalazimo).addView(
                     knjige.get(ukupniKnjigaCounter - 1), knjigaParams);
