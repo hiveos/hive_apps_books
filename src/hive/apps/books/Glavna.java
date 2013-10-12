@@ -69,7 +69,7 @@ public class Glavna extends Activity implements OnClickListener, OnLongClickList
 	}
 	
 	private void dodajKnjigu(){
-		if(knjigaCounter<4)
+		if(knjigaCounter<3)
 		{
 			knjiga=new MyButton(this, foldernoIme);
 			knjiga.setOnClickListener(this);
@@ -89,13 +89,13 @@ public class Glavna extends Activity implements OnClickListener, OnLongClickList
 			ukupniKnjigaCounter++;
 			knjigaParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
                     LayoutParams.WRAP_CONTENT);
-			knjigaParams.leftMargin = 25;
+			knjigaParams.leftMargin = 40;
             knjigaParams.bottomMargin = 25;
-            knjigaParams.topMargin = 10;
+            knjigaParams.topMargin = 15;
             police.get(policaNaKojojSeNalazimo).addView(
                     knjige.get(ukupniKnjigaCounter - 1), knjigaParams);
 		}
-		else if(knjigaCounter>=4)
+		else if(knjigaCounter>=3)
 		{
 			if (ukupniKnjigaCounter >= 20)
                 dodajPolicu();
