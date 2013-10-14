@@ -186,11 +186,9 @@ public class Glavna extends Activity implements OnClickListener, OnLongClickList
 		}
 		File targetLocation = new File(Glavna.sdCard + "/HIVE/Books/"
 				+ obradjujemo);
-		Intent intent = new Intent(Intent.ACTION_VIEW);
-		intent.setDataAndType(Uri.fromFile(targetLocation),
-				"application/pdf");
-		intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-		startActivity(intent);
+		Intent intent = new Intent(this, PDFActivity.class);
+	    intent.putExtra(PDFActivity.EXTRA_PDFFILENAME, targetLocation);
+	    startActivity(intent);
 		
 	}
 

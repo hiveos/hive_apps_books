@@ -36,6 +36,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="hive.apps.books.MainActivity" />
         </activity>
+        <activity
+            android:name="hive.apps.books.PDFActivity"
+            android:label="@string/title_activity_pdf" >
+        </activity>
     </application>
 
 </manifest>

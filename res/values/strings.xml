@@ -6,5 +6,7 @@
     <string name="action_open_pdf">Open External PDF</string>
     <string name="title_activity_file_manager">Open a PDF</string>
     <string name="title_activity_glavna">Books</string>
+    <string name="title_activity_pdf">PDFActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
