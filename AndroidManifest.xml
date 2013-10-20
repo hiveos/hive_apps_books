@@ -9,6 +9,8 @@
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -39,6 +41,10 @@
         <activity
             android:name="hive.apps.books.PDFActivity"
             android:label="@string/title_activity_pdf" >
+        </activity>
+        <activity
+            android:name="hive.apps.books.PDFview"
+            android:label="@string/title_activity_pdfview" >
         </activity>
     </application>
 

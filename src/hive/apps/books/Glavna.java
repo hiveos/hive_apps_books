@@ -2,7 +2,6 @@ package hive.apps.books;
 
 import java.io.File;
 import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,6 +17,7 @@ import android.view.View.OnLongClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.Toast;
 
 public class Glavna extends Activity implements OnClickListener, OnLongClickListener{
 
@@ -39,6 +39,8 @@ public class Glavna extends Activity implements OnClickListener, OnLongClickList
 	private int brojKnjigaZaLoadati;
 	private File[] brojKnjizica;
 	private String foldernoIme;
+	public String obradjujemo = "";
+	public static File path;
 
 	private void inicijaliziraj() {
 		sdCard = Environment.getExternalStorageDirectory().toString();
@@ -177,19 +179,26 @@ public class Glavna extends Activity implements OnClickListener, OnLongClickList
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
 		MyButton trenutno=(MyButton)arg0;
-		String obradjujemo = "";
 		for(int i=0; i<knjige.size(); i++)
 		{
 			if(knjige.get(i).imeKnjige.toString().equals(trenutno.imeKnjige.toString())){
 				obradjujemo=knjige.get(i).imeKnjige.toString();
 			}
 		}
-		File targetLocation = new File(Glavna.sdCard + "/HIVE/Books/"
-				+ obradjujemo);
-		Intent intent = new Intent(this, PDFActivity.class);
-	    intent.putExtra(PDFActivity.EXTRA_PDFFILENAME, targetLocation);
-	    startActivity(intent);
+		path = new File(sdCard + "/HIVE/Books/"
+				+ obradjujemo);		
+		openPdfIntent(path.toString());
 		
 	}
+	
+	private void openPdfIntent(String path) {
+        try {
+            final Intent intent = new Intent(Glavna.this, PDFActivity.class);
+            intent.putExtra(PDFActivity.EXTRA_PDFFILENAME, path);
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }
