@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 public class PageScroller extends Activity {
@@ -38,8 +39,32 @@ public class PageScroller extends Activity {
 			Bitmap bip = Glavna.nizStranica.get(i);
 			slika.setImageBitmap(bip);
 			viewFlipper.addView(view);
+			slika.setOnTouchListener(new OnSwipeTouchListener() {
+			    public void onSwipeTop() {
+			    }
+			    public void onSwipeRight() {
+			    	desno();
+			    }
+			    public void onSwipeLeft() {
+			    	lijevo();
+			    }
+			    public void onSwipeBottom() {
+			    }
+			});
 		}
 	
+	}
+	
+	public void lijevo(){
+		viewFlipper.setOutAnimation(this, R.anim.out_to_left);
+		viewFlipper.setInAnimation(this, R.anim.in_from_right);
+		viewFlipper.showNext();
+	}
+	
+	public void desno(){
+		viewFlipper.setOutAnimation(this, R.anim.out_to_right);
+		viewFlipper.setInAnimation(this, R.anim.in_from_left);
+		viewFlipper.showPrevious();
 	}
 
 	@Override
