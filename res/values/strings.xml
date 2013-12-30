@@ -9,5 +9,6 @@
     <string name="title_activity_pdf">PDFActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_pdfview">PDFview</string>
+    <string name="title_activity_page_scroller">PageScroller</string>
 
 </resources>

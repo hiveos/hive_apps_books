@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +27,7 @@ public class Glavna extends Activity implements OnClickListener, OnLongClickList
 	private LinearLayout polica;
 	private ArrayList<LinearLayout> police = new ArrayList<LinearLayout>();
 	private ArrayList<MyButton> knjige = new ArrayList<MyButton>();
+	public static ArrayList<Bitmap> nizStranica = new ArrayList<Bitmap>();
 	private int policaCounter;
 	private LayoutParams parametri;
 	private LayoutParams knjigaParams;
@@ -39,8 +41,9 @@ public class Glavna extends Activity implements OnClickListener, OnLongClickList
 	private int brojKnjigaZaLoadati;
 	private File[] brojKnjizica;
 	private String foldernoIme;
-	public String obradjujemo = "";
+	public static String obradjujemo = "";
 	public static File path;
+	public File[] stranice;
 
 	private void inicijaliziraj() {
 		sdCard = Environment.getExternalStorageDirectory().toString();
@@ -54,9 +57,9 @@ public class Glavna extends Activity implements OnClickListener, OnLongClickList
         policaNaKojojSeNalazimo = 0;
         ukupniKnjigaCounter = 0;
         
-        brojKnjigaZaLoadati = new File(
+        brojKnjigaZaLoadati = (new File(
                 Environment.getExternalStorageDirectory() + "/HIVE/Books/")
-                .listFiles().length;
+                .listFiles().length)/2;
 	}
 
 	private void dodajPolicu() {
@@ -77,15 +80,15 @@ public class Glavna extends Activity implements OnClickListener, OnLongClickList
 			knjiga.setOnClickListener(this);
 			knjiga.setOnLongClickListener(this);
 			knjiga.setId(ukupniKnjigaCounter);
-			String imeKnjigeBezEkstenzije = knjiga.imeKnjige.substring(0, knjiga.imeKnjige.lastIndexOf('.'));
+			String imeKnjigeBezEkstenzije = knjiga.imeKnjige;
+			Log.d("IME KNJIGE BEZ EKSTENZIJE", imeKnjigeBezEkstenzije);
 			
 			BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 			Bitmap bitmap = BitmapFactory.decodeFile(sdCard + "/HIVE/Books/"
-					+ imeKnjigeBezEkstenzije +".png", options);			
+					+ imeKnjigeBezEkstenzije +".jpg", options);			
 			
 			knjiga.setImageBitmap(bitmap);
-			
 			knjige.add(knjiga);
 			knjigaCounter++;
 			ukupniKnjigaCounter++;
@@ -113,11 +116,7 @@ public class Glavna extends Activity implements OnClickListener, OnLongClickList
                 + "/HIVE/Books/").listFiles();
 		
 		for (File infile : brojKnjizica) {
-			String ekstenzijaFajla = infile.getName().substring(
-					(infile.getName().lastIndexOf(".") + 1), infile.getName().length());
-			
-			
-            if (infile.isFile() && ekstenzijaFajla.equals("pdf")) {
+            if (infile.isDirectory()) {
             		foldernoIme = infile.getName();
                     isNeededToLoad = true;
                     dodajKnjigu();
@@ -174,6 +173,19 @@ public class Glavna extends Activity implements OnClickListener, OnLongClickList
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	public void ucitajStranice(){
+		stranice = path.listFiles();
+		System.out.println(stranice.length+"");
+		
+		for (File stranica : stranice) {
+            if (stranica.isFile()) {
+            	Bitmap bmpStranica = BitmapFactory.decodeFile(stranica.getAbsolutePath());
+            	nizStranica.add(bmpStranica);
+            }
+		}
+		System.out.println(nizStranica.size()+" ");
+	}
 
 	@Override
 	public void onClick(View arg0) {
@@ -186,19 +198,12 @@ public class Glavna extends Activity implements OnClickListener, OnLongClickList
 			}
 		}
 		path = new File(sdCard + "/HIVE/Books/"
-				+ obradjujemo);		
-		openPdfIntent(path.toString());
+				+ obradjujemo+"/");
+		Log.d("Obradjujemo:", path.getAbsolutePath().toString());
+		ucitajStranice();
+		Intent intent = new Intent(Glavna.this, PageScroller.class);
+        startActivity(intent);
 		
 	}
-	
-	private void openPdfIntent(String path) {
-        try {
-            final Intent intent = new Intent(Glavna.this, PDFActivity.class);
-            intent.putExtra(PDFActivity.EXTRA_PDFFILENAME, path);
-            startActivity(intent);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 }

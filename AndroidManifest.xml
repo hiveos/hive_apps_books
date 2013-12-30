@@ -46,6 +46,10 @@
             android:name="hive.apps.books.PDFview"
             android:label="@string/title_activity_pdfview" >
         </activity>
+        <activity
+            android:name="hive.apps.books.PageScroller"
+            android:label="@string/title_activity_page_scroller" >
+        </activity>
     </application>
 
 </manifest>

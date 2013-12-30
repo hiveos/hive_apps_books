@@ -73,7 +73,7 @@ public class MainActivity extends ListActivity {
 
 			if (file.isDirectory()) {
 				getFiles(file.listFiles());
-			} else if (file.isFile() && ekstenzijaFajla.equals("pdf")) {
+			} else if (file.isDirectory()) {
 				File bookRoot = new File(file.getPath());
 				File targetLocation = new File(Glavna.sdCard + "/HIVE/Books/"
 						+ imeFajla);
@@ -96,40 +96,11 @@ public class MainActivity extends ListActivity {
 						e.printStackTrace();
 					}
 				     
-				    Intent intent = new Intent(this, PDFActivity.class);
-				    intent.putExtra(PDFActivity.EXTRA_PDFFILENAME, targetLocation);
-				    startActivity(intent);
-
-					/*Intent intent = new Intent(Intent.ACTION_VIEW);
-					intent.setDataAndType(Uri.fromFile(targetLocation),
-							"application/pdf");
-					intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-					startActivity(intent);*/
 				}
 
 				if (bookRoot.toString().equals(targetLocation.toString())) {
-					
-					Intent intent = new Intent(this, PDFActivity.class);
-				    intent.putExtra(PDFActivity.EXTRA_PDFFILENAME, targetLocation);
-				    startActivity(intent);
-				    
-					/*Intent intent = new Intent(Intent.ACTION_VIEW);
-					intent.setDataAndType(Uri.fromFile(targetLocation),
-							"application/pdf");
-					intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-					startActivity(intent);*/
 				}
 
-			} else {
-				new AlertDialog.Builder(this)
-						.setTitle(ekstenzijaFajla + " files are not supported ")
-						.setNeutralButton("OK",
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int button) {
-										// do nothing
-									}
-								}).show();
 			}
 
 		}
