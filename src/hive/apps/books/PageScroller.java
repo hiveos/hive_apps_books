@@ -24,12 +24,13 @@ import android.widget.ViewFlipper;
 public class PageScroller extends Activity {
 	
 	ViewFlipper viewFlipper;
+	public Boolean isEditable;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_page_scroller);
-		
+		isEditable=false;
 		viewFlipper = (ViewFlipper) findViewById(R.id.view_flipper);
 		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
@@ -56,15 +57,19 @@ public class PageScroller extends Activity {
 	}
 	
 	public void lijevo(){
-		viewFlipper.setOutAnimation(this, R.anim.out_to_left);
-		viewFlipper.setInAnimation(this, R.anim.in_from_right);
-		viewFlipper.showNext();
+		//if(!isEditable){
+			viewFlipper.setOutAnimation(this, R.anim.out_to_left);
+			viewFlipper.setInAnimation(this, R.anim.in_from_right);
+			viewFlipper.showNext();
+		//}
 	}
 	
 	public void desno(){
-		viewFlipper.setOutAnimation(this, R.anim.out_to_right);
-		viewFlipper.setInAnimation(this, R.anim.in_from_left);
-		viewFlipper.showPrevious();
+		//if(!isEditable){
+			viewFlipper.setOutAnimation(this, R.anim.out_to_right);
+			viewFlipper.setInAnimation(this, R.anim.in_from_left);
+			viewFlipper.showPrevious();
+		//}
 	}
 
 	@Override
@@ -89,6 +94,16 @@ public class PageScroller extends Activity {
 			viewFlipper.setInAnimation(this, R.anim.in_from_right);
 			viewFlipper.showNext();
 			return true;
+		/*case R.id.edit:
+			if(isEditable==true){
+				isEditable=false;
+				return true;
+			}
+			if(!isEditable){
+				isEditable=true;
+				return false;
+			}
+			return true;*/
 		default: return false;
 		
 		}

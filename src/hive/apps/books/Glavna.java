@@ -56,6 +56,7 @@ public class Glavna extends Activity implements OnClickListener, OnLongClickList
         knjigaCounter = 0;
         policaNaKojojSeNalazimo = 0;
         ukupniKnjigaCounter = 0;
+        nizStranica.clear();
         
         brojKnjigaZaLoadati = (new File(
                 Environment.getExternalStorageDirectory() + "/HIVE/Books/")
