@@ -77,6 +77,7 @@ public class Glavna extends Activity implements OnClickListener, OnLongClickList
 	private void dodajKnjigu(){
 		if(knjigaCounter<3)
 		{
+			Log.d("Ime foldera:", foldernoIme);
 			knjiga=new MyButton(this, foldernoIme);
 			knjiga.setOnClickListener(this);
 			knjiga.setOnLongClickListener(this);
@@ -87,11 +88,13 @@ public class Glavna extends Activity implements OnClickListener, OnLongClickList
 			BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 			Bitmap bitmap = BitmapFactory.decodeFile(sdCard + "/HIVE/Books/"
-					+ imeKnjigeBezEkstenzije +".jpg", options);			
+					+ foldernoIme + "/1.jpg", options);	
+			Bitmap smanjeni = bitmap.createScaledBitmap(bitmap, 130, 170, false);
 			
-			knjiga.setImageBitmap(bitmap);
+			knjiga.setImageBitmap(smanjeni);
 			knjige.add(knjiga);
 			knjigaCounter++;
+			Log.d("Knjiga counter:" , knjigaCounter+"");
 			ukupniKnjigaCounter++;
 			knjigaParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
                     LayoutParams.WRAP_CONTENT);
