@@ -27,6 +27,7 @@ public class PageScroller extends Activity {
 	public Boolean isEditable;
 	CrtanjeView crtanjeView;
 	Bitmap bip;
+	int brr=0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class PageScroller extends Activity {
 		for (int i = 0; i < Glavna.nizStranica.size(); i++) {
 			View view = inflater.inflate(R.layout.flip_lay, viewFlipper, false);
 			ImageView slika = (ImageView)view.findViewById(R.id.slikaStranice);
+			brr=i;
 			bip = Glavna.nizStranica.get(i);
 			slika.setImageBitmap(bip);
 			viewFlipper.addView(view);
@@ -102,7 +104,7 @@ public class PageScroller extends Activity {
 				isEditable=false;
 				findViewById(R.id.next).setEnabled(true);
 				findViewById(R.id.previous).setEnabled(true);
-				crtanjeView.spreminamStranicu();
+				crtanjeView.spreminamStranicu(brr+1);
 				
 				return true;
 			}

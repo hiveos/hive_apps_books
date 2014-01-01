@@ -98,17 +98,17 @@ public class CrtanjeView extends View {
 		postaviKist();
 	}
 	
-	public void spreminamStranicu(){
+	public void spreminamStranicu(int brstr){
 		File gdjeSnimiti = new File(Environment.getExternalStorageDirectory()
 				+ "/HIVE/Books/");
 		if(!gdjeSnimiti.exists()) gdjeSnimiti.mkdirs();
 		File nesto = new File(Environment.getExternalStorageDirectory()
-				+ "/HIVE/slika1.png");
+				+ "/HIVE/Books/"+Glavna.obradjujemo+"/"+ brstr +".jpg");
 		FileOutputStream ostream;
 		try {
 			nesto.createNewFile();
 			ostream = new FileOutputStream(nesto);
-			MyBitmap.compress(CompressFormat.PNG, 100, ostream);
+			MyBitmap.compress(CompressFormat.JPEG, 100, ostream);
 			ostream.flush();
 			ostream.close();
 		} catch (Exception e) {
