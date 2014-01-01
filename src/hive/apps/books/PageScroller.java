@@ -9,6 +9,7 @@ import hive.apps.books.R.id;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -33,11 +34,24 @@ public class PageScroller extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_page_scroller);
+	}
+	
+	
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
 		isEditable=false;
 		viewFlipper = (ViewFlipper) findViewById(R.id.view_flipper);
 		crtanjeView=(CrtanjeView)findViewById(R.id.crtanje);
+		postaviViewFlipper();
+	}
+
+
+
+	public void postaviViewFlipper(){
 		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
 		for (int i = 0; i < Glavna.nizStranica.size(); i++) {
 			View view = inflater.inflate(R.layout.flip_lay, viewFlipper, false);
 			ImageView slika = (ImageView)view.findViewById(R.id.slikaStranice);
@@ -58,11 +72,11 @@ public class PageScroller extends Activity {
 			    }
 			});
 		}
-	
 	}
 	
 	public void lijevo(){
 		if(!isEditable){
+			crtanjeView.ocistiFunkcija();
 			viewFlipper.setOutAnimation(this, R.anim.out_to_left);
 			viewFlipper.setInAnimation(this, R.anim.in_from_right);
 			viewFlipper.showNext();
@@ -71,6 +85,7 @@ public class PageScroller extends Activity {
 	
 	public void desno(){
 		if(!isEditable){
+			crtanjeView.ocistiFunkcija();
 			viewFlipper.setOutAnimation(this, R.anim.out_to_right);
 			viewFlipper.setInAnimation(this, R.anim.in_from_left);
 			viewFlipper.showPrevious();
@@ -105,7 +120,8 @@ public class PageScroller extends Activity {
 				findViewById(R.id.next).setEnabled(true);
 				findViewById(R.id.previous).setEnabled(true);
 				crtanjeView.spreminamStranicu(brr+1);
-				
+				viewFlipper.bringToFront();
+				postaviViewFlipper();
 				return true;
 			}
 			if(!isEditable){
