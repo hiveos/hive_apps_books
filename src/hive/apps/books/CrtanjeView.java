@@ -1,6 +1,9 @@
 package hive.apps.books;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
+
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,6 +11,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Bitmap.CompressFormat;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -26,6 +31,7 @@ public class CrtanjeView extends View {
 	public static ArrayList<mojaPutanja> undonePaths = new ArrayList<mojaPutanja>();
 	public static Bitmap MyBitmap;
 	public Canvas mCanvas;
+	Bitmap kojiKoristimo=null;
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -90,6 +96,30 @@ public class CrtanjeView extends View {
 		super(k, set);
 		inicijalizacija(k);
 		postaviKist();
+	}
+	
+	public void spreminamStranicu(){
+		File gdjeSnimiti = new File(Environment.getExternalStorageDirectory()
+				+ "/HIVE/Books/");
+		if(!gdjeSnimiti.exists()) gdjeSnimiti.mkdirs();
+		File nesto = new File(Environment.getExternalStorageDirectory()
+				+ "/HIVE/slika1.png");
+		FileOutputStream ostream;
+		try {
+			nesto.createNewFile();
+			ostream = new FileOutputStream(nesto);
+			MyBitmap.compress(CompressFormat.PNG, 100, ostream);
+			ostream.flush();
+			ostream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void nacrtajnamCanvas(Bitmap str){
+		kojiKoristimo=str;
+		//mCanvas=new Canvas(str);
+		mCanvas.drawBitmap(str, 0, 0, null);
 	}
 
 	@Override

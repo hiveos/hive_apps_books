@@ -3,11 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PageScroller" >
+    
+    	<hive.apps.books.CrtanjeView 
+    	    android:id="@+id/crtanje"
+    	    android:layout_width="match_parent"
+    	    android:layout_height="match_parent"/>
 
         <ViewFlipper
             android:id="@+id/view_flipper"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_margin="6dip"
             android:layout_weight="1" >
         </ViewFlipper>

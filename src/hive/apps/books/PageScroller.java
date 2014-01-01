@@ -25,6 +25,8 @@ public class PageScroller extends Activity {
 	
 	ViewFlipper viewFlipper;
 	public Boolean isEditable;
+	CrtanjeView crtanjeView;
+	Bitmap bip;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +34,13 @@ public class PageScroller extends Activity {
 		setContentView(R.layout.activity_page_scroller);
 		isEditable=false;
 		viewFlipper = (ViewFlipper) findViewById(R.id.view_flipper);
+		crtanjeView=(CrtanjeView)findViewById(R.id.crtanje);
 		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
 		for (int i = 0; i < Glavna.nizStranica.size(); i++) {
 			View view = inflater.inflate(R.layout.flip_lay, viewFlipper, false);
 			ImageView slika = (ImageView)view.findViewById(R.id.slikaStranice);
-			Bitmap bip = Glavna.nizStranica.get(i);
+			bip = Glavna.nizStranica.get(i);
 			slika.setImageBitmap(bip);
 			viewFlipper.addView(view);
 			slika.setOnTouchListener(new OnSwipeTouchListener() {
@@ -57,19 +60,19 @@ public class PageScroller extends Activity {
 	}
 	
 	public void lijevo(){
-		//if(!isEditable){
+		if(!isEditable){
 			viewFlipper.setOutAnimation(this, R.anim.out_to_left);
 			viewFlipper.setInAnimation(this, R.anim.in_from_right);
 			viewFlipper.showNext();
-		//}
+		}
 	}
 	
 	public void desno(){
-		//if(!isEditable){
+		if(!isEditable){
 			viewFlipper.setOutAnimation(this, R.anim.out_to_right);
 			viewFlipper.setInAnimation(this, R.anim.in_from_left);
 			viewFlipper.showPrevious();
-		//}
+		}
 	}
 
 	@Override
@@ -94,16 +97,24 @@ public class PageScroller extends Activity {
 			viewFlipper.setInAnimation(this, R.anim.in_from_right);
 			viewFlipper.showNext();
 			return true;
-		/*case R.id.edit:
+		case R.id.edit:
 			if(isEditable==true){
 				isEditable=false;
+				findViewById(R.id.next).setEnabled(true);
+				findViewById(R.id.previous).setEnabled(true);
+				crtanjeView.spreminamStranicu();
+				
 				return true;
 			}
 			if(!isEditable){
 				isEditable=true;
+				findViewById(R.id.next).setEnabled(false);
+				findViewById(R.id.previous).setEnabled(false);
+				crtanjeView.bringToFront();
+				crtanjeView.nacrtajnamCanvas(bip);
 				return false;
 			}
-			return true;*/
+			return true;
 		default: return false;
 		
 		}
