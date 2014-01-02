@@ -52,10 +52,10 @@ public class PageScroller extends Activity {
 
 	public void postaviViewFlipper(){
 		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		brr=0;
 		for (int i = 0; i < Glavna.nizStranica.size(); i++) {
 			View view = inflater.inflate(R.layout.flip_lay, viewFlipper, false);
 			ImageView slika = (ImageView)view.findViewById(R.id.slikaStranice);
-			brr=i;
 			bip = Glavna.nizStranica.get(i);
 			slika.setImageBitmap(bip);
 			viewFlipper.addView(view);
@@ -76,6 +76,7 @@ public class PageScroller extends Activity {
 	
 	public void lijevo(){
 		if(!isEditable){
+			brr++;
 			crtanjeView.ocistiFunkcija();
 			viewFlipper.setOutAnimation(this, R.anim.out_to_left);
 			viewFlipper.setInAnimation(this, R.anim.in_from_right);
@@ -84,6 +85,8 @@ public class PageScroller extends Activity {
 	}
 	
 	public void desno(){
+		if(brr>0) brr--;
+		else brr=Glavna.nizStranica.size();
 		if(!isEditable){
 			crtanjeView.ocistiFunkcija();
 			viewFlipper.setOutAnimation(this, R.anim.out_to_right);
@@ -120,7 +123,6 @@ public class PageScroller extends Activity {
 				findViewById(R.id.next).setEnabled(true);
 				findViewById(R.id.previous).setEnabled(true);
 				crtanjeView.spreminamStranicu(brr+1);
-				viewFlipper.bringToFront();
 				postaviViewFlipper();
 				return true;
 			}
