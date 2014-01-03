@@ -43,8 +43,12 @@
         <activity
             android:name="hive.apps.books.PageScroller"
             android:label="@string/title_activity_page_scroller"
+            android:parentActivityName="hive.apps.books.Glavna"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Books" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="hive.apps.books.PageScroller" />
         </activity>
         <activity
             android:name="hive.apps.books.SettingsActivity"
