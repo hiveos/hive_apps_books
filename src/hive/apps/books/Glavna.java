@@ -199,7 +199,7 @@ public class Glavna extends Activity implements OnClickListener,
 			Bitmap bitmap = BitmapFactory.decodeFile(sdCard + "/HIVE/Books/"
 					+ foldernoIme + "/1.jpg", options);
 			Bitmap smanjeni = Bitmap
-					.createScaledBitmap(bitmap, 180, 272, false);
+					.createScaledBitmap(bitmap, 180, 240, false);
 
 			knjiga.setBackgroundResource(R.drawable.books_bg);
 			knjiga.setImageBitmap(smanjeni);
