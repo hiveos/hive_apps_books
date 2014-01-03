@@ -20,6 +20,7 @@
         <activity
             android:name="hive.apps.books.Glavna"
             android:label="@string/title_activity_glavna"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Books.TransculentSystemBars" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,16 +31,19 @@
         <activity
             android:name="hive.apps.books.PDFActivity"
             android:label="@string/title_activity_pdf"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Books.TransculentSystemBars" >
         </activity>
         <activity
             android:name="hive.apps.books.PDFview"
             android:label="@string/title_activity_pdfview"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Books" >
         </activity>
         <activity
             android:name="hive.apps.books.PageScroller"
             android:label="@string/title_activity_page_scroller"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Books" >
         </activity>
         <activity
