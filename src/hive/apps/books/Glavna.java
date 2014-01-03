@@ -189,6 +189,7 @@ public class Glavna extends Activity implements OnClickListener,
 			knjiga.setOnClickListener(this);
 			knjiga.setOnLongClickListener(this);
 			knjiga.setId(ukupniKnjigaCounter);
+			knjiga.setPadding(1, 1, 1, 1);
 
 			String imeKnjigeBezEkstenzije = knjiga.imeKnjige;
 			Log.d("IME KNJIGE BEZ EKSTENZIJE", imeKnjigeBezEkstenzije);
@@ -200,6 +201,7 @@ public class Glavna extends Activity implements OnClickListener,
 			Bitmap smanjeni = Bitmap
 					.createScaledBitmap(bitmap, 180, 272, false);
 
+			knjiga.setBackgroundResource(R.drawable.books_bg);
 			knjiga.setImageBitmap(smanjeni);
 			knjige.add(knjiga);
 			knjigaCounter++;
