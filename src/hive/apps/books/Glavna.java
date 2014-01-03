@@ -138,6 +138,7 @@ public class Glavna extends Activity implements OnClickListener,
 				.listFiles().length);
 	}
 
+	@SuppressLint("ResourceAsColor")
 	private void dodajPolicu() {
 		emptyspace = (LinearLayout) findViewById(R.id.space);
 		polica = new LinearLayout(this);
@@ -148,20 +149,20 @@ public class Glavna extends Activity implements OnClickListener,
 				LayoutParams.WRAP_CONTENT);
 		polica.setLayoutParams(params);
 		polica.setGravity(Gravity.CENTER_HORIZONTAL);
-		emptyspace.setBackgroundResource(R.drawable.transparent);
+		emptyspace.setBackgroundResource(R.color.background);
 
 		if (getShelfStyle().equals("no")) {
 			params.topMargin = 55;
 			params.leftMargin = 50;
 			params.rightMargin = 50;
-			emptyspace.setBackgroundResource(R.drawable.transparent);
+			emptyspace.setBackgroundResource(R.color.background);
 		}
 		if (getShelfStyle().equals("simple")) {
 			params.topMargin = 55;
 			params.leftMargin = 50;
 			params.rightMargin = 50;
 			polica.setBackgroundResource(R.drawable.shelf_simple);
-			emptyspace.setBackgroundResource(R.drawable.transparent);
+			emptyspace.setBackgroundResource(R.color.background);
 		}
 		if (getShelfStyle().equals("wooden")) {
 			params.topMargin = 0;
@@ -271,6 +272,5 @@ public class Glavna extends Activity implements OnClickListener,
 		startActivity(intent);
 
 	}
-
 
 }
