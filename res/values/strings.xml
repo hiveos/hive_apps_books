@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Books</string>
+    <string name="app_name">BOOKS</string>
     <string name="action_settings">Settings</string>
     <string name="action_open_pdf">Open External PDF</string>
     <string name="title_activity_file_manager">Open a PDF</string>
     <string name="title_activity_glavna">Books</string>
     <string name="title_activity_pdf">PDFActivity</string>
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_pdfview">PDFview</string>
     <string name="title_activity_page_scroller">PageScroller</string>
+    <string name="title_activity_settings">SETTINGS</string>
+
+    <!-- SETTINGS STRINGS -->
+
+    <string name="pref_title_ui">USER INTERFACE</string>
+    <string name="pref_shelf_style_title">Shelf Style</string>
+    <string name="pref_shelf_style_desc">Determines the way the shelves will look</string>
+    <string name="pref_shelf_style_default">no</string>
+
+    <string-array name="pref_shelf_style_entries">
+        <item>No Shelves</item>
+        <item>Simple Shelves</item>
+        <item>Wooden Shelves</item>
+    </string-array>
+    <string-array name="pref_shelf_style_values">
+        <item>no</item>
+        <item>simple</item>
+        <item>wooden</item>
+    </string-array>
 
 </resources>

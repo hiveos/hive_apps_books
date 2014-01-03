@@ -5,8 +5,8 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="17" />
+        android:minSdkVersion="19"
+        android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -16,10 +16,11 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/Theme.Books.TransculentSystemBars" >
         <activity
             android:name="hive.apps.books.Glavna"
-            android:label="@string/title_activity_glavna" >
+            android:label="@string/title_activity_glavna"
+            android:theme="@style/Theme.Books.TransculentSystemBars" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,24 +28,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="hive.apps.books.MainActivity"
-            android:label="@string/title_activity_file_manager"
-            android:parentActivityName="com.example.hivebooks.Glavna" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="hive.apps.books.MainActivity" />
-        </activity>
-        <activity
             android:name="hive.apps.books.PDFActivity"
-            android:label="@string/title_activity_pdf" >
+            android:label="@string/title_activity_pdf"
+            android:theme="@style/Theme.Books.TransculentSystemBars" >
         </activity>
         <activity
             android:name="hive.apps.books.PDFview"
-            android:label="@string/title_activity_pdfview" >
+            android:label="@string/title_activity_pdfview"
+            android:theme="@style/Theme.Books" >
         </activity>
         <activity
             android:name="hive.apps.books.PageScroller"
-            android:label="@string/title_activity_page_scroller" >
+            android:label="@string/title_activity_page_scroller"
+            android:theme="@style/Theme.Books.TransculentNavigationBar" >
+        </activity>
+        <activity
+            android:name="hive.apps.books.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName="hive.apps.books.Glavna"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Books.TransculentNavigationBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="hive.apps.books.SettingsActivity" />
         </activity>
     </application>
 
