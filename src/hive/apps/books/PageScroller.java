@@ -34,15 +34,15 @@ public class PageScroller extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_page_scroller);
 
-		final View decorView = getWindow().getDecorView();
-		decorView
-				.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-					@Override
-					public void onSystemUiVisibilityChange(int i) {
-						int height = decorView.getHeight();
-						Log.i("TAG", "Current height: " + height);
-					}
-				});
+//		final View decorView = getWindow().getDecorView();
+//		decorView
+//				.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+//					@Override
+//					public void onSystemUiVisibilityChange(int i) {
+//						int height = decorView.getHeight();
+//						Log.i("TAG", "Current height: " + height);
+//					}
+//				});
 
 		toggleHideyBar();
 	}
