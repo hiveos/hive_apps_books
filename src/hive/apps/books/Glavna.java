@@ -189,6 +189,7 @@ public class Glavna extends Activity implements OnClickListener,
 			knjiga.setOnClickListener(this);
 			knjiga.setOnLongClickListener(this);
 			knjiga.setId(ukupniKnjigaCounter);
+
 			String imeKnjigeBezEkstenzije = knjiga.imeKnjige;
 			Log.d("IME KNJIGE BEZ EKSTENZIJE", imeKnjigeBezEkstenzije);
 
@@ -197,7 +198,7 @@ public class Glavna extends Activity implements OnClickListener,
 			Bitmap bitmap = BitmapFactory.decodeFile(sdCard + "/HIVE/Books/"
 					+ foldernoIme + "/1.jpg", options);
 			Bitmap smanjeni = Bitmap
-					.createScaledBitmap(bitmap, 130, 170, false);
+					.createScaledBitmap(bitmap, 180, 272, false);
 
 			knjiga.setImageBitmap(smanjeni);
 			knjige.add(knjiga);
@@ -206,9 +207,10 @@ public class Glavna extends Activity implements OnClickListener,
 			ukupniKnjigaCounter++;
 			knjigaParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
 					LayoutParams.WRAP_CONTENT);
-			knjigaParams.leftMargin = 30;
-			knjigaParams.bottomMargin = 20;
-			knjigaParams.topMargin = 15;
+			knjigaParams.leftMargin = 15;
+			knjigaParams.rightMargin = 15;
+			knjigaParams.bottomMargin = 0;
+			knjigaParams.topMargin = 0;
 			police.get(policaNaKojojSeNalazimo).addView(
 					knjige.get(ukupniKnjigaCounter - 1), knjigaParams);
 		} else if (knjigaCounter >= 3) {
