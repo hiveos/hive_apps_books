@@ -38,6 +38,7 @@
     <style name="Theme.Books.TransculentSystemBars" parent="Theme.Books">
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowTranslucentStatus">true</item>
+        
     </style>
 
     <style name="Theme.Books.TransculentNavigationBar" parent="Theme.Books">

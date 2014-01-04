@@ -1,21 +1,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    
+
     <item
-        android:id="@+id/edit"
-        android:orderInCategory="100"
-        android:showAsAction="ifRoom"
+        android:id="@+id/action_edit"
+        android:icon="@drawable/ic_content_edit"
+        android:orderInCategory="1"
+        android:showAsAction="always"
         android:title="Edit"/>
-    
     <item
-        android:id="@+id/previous"
-        android:orderInCategory="100"
-        android:showAsAction="ifRoom"
+        android:id="@+id/action_previous"
+        android:icon="@drawable/ic_navigation_previous"
+        android:orderInCategory="98"
+        android:showAsAction="always"
         android:title="Previous"/>
-    
     <item
-        android:id="@+id/next"
-        android:orderInCategory="100"
-        android:showAsAction="ifRoom"
+        android:id="@+id/action_next"
+        android:icon="@drawable/ic_navigation_next"
+        android:orderInCategory="99"
+        android:showAsAction="always"
         android:title="Next"/>
+    <item
+        android:id="@+id/action_fullscreen"
+        android:icon="@drawable/ic_navigation_collapse"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="Fullscreen"/>
 
 </menu>
