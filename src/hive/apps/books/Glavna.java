@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -15,23 +14,14 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.TextView;
 
 public class Glavna extends Activity implements OnClickListener,
 		OnLongClickListener {
@@ -168,7 +158,7 @@ public class Glavna extends Activity implements OnClickListener,
 			params.topMargin = 0;
 			params.leftMargin = 0;
 			params.rightMargin = 0;
-			polica.setPadding(50, 20, 50, 0);
+			polica.setPadding(50, 20, 50, 21);
 			polica.setBackgroundResource(R.drawable.shelf_wooden);
 			emptyspace.setBackgroundResource(R.drawable.shelf_wooden_empty);
 		}
@@ -250,8 +240,12 @@ public class Glavna extends Activity implements OnClickListener,
 
 		for (File stranica : stranice) {
 			if (stranica.isFile()) {
-				Bitmap bmpStranica = BitmapFactory.decodeFile(stranica
-						.getAbsolutePath());
+				BitmapFactory.Options options = new BitmapFactory.Options();
+				  options.inSampleSize = 0;
+				  Bitmap bmpStranica = BitmapFactory.decodeFile(stranica.getAbsolutePath(), options);
+				
+				// Bitmap bmpStranica = BitmapFactory.decodeFile(stranica
+				// .getAbsolutePath());
 				nizStranica.add(bmpStranica);
 			}
 		}
