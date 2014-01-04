@@ -133,9 +133,11 @@ public class PageScroller extends Activity {
 		case R.id.action_fullscreen:
 			if (!isImmersiveModeEnabled) {
 				fullscreenItem.setIcon(R.drawable.ic_navigation_expand);
+				fullscreenItem.setTitle("Show System Bars");
 				toggleImmersive();
 			} else if (isImmersiveModeEnabled) {
 				fullscreenItem.setIcon(R.drawable.ic_navigation_collapse);
+				fullscreenItem.setTitle("Hide System Bars");
 				toggleImmersive();
 			}
 
