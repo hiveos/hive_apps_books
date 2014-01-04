@@ -97,7 +97,9 @@ public class PageScroller extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		MenuItem fullscreenItem = menu.findItem(R.id.action_fullscreen);
-		
+		MenuItem nextItem = menu.findItem(R.id.action_next);
+		MenuItem previousItem = menu.findItem(R.id.action_previous);
+
 		int uiOptions = getWindow().getDecorView().getSystemUiVisibility();
 		int newUiOptions = uiOptions;
 		boolean isImmersiveModeEnabled = ((uiOptions | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY) == uiOptions);
@@ -116,16 +118,20 @@ public class PageScroller extends Activity {
 		case R.id.action_edit:
 			if (isEditable == true) {
 				isEditable = false;
-				findViewById(R.id.action_next).setEnabled(true);
-				findViewById(R.id.action_previous).setEnabled(true);
+				nextItem.setEnabled(true);
+				nextItem.setIcon(R.drawable.ic_navigation_next);
+				previousItem.setEnabled(true);
+				previousItem.setIcon(R.drawable.ic_navigation_previous);
 				crtanjeView.spreminamStranicu(brr + 1);
 				postaviViewFlipper();
 				return true;
 			}
 			if (!isEditable) {
 				isEditable = true;
-				findViewById(R.id.action_next).setEnabled(false);
-				findViewById(R.id.action_previous).setEnabled(false);
+				nextItem.setEnabled(false);
+				nextItem.setIcon(R.drawable.ic_navigation_next_disabled);
+				previousItem.setEnabled(false);
+				previousItem.setIcon(R.drawable.ic_navigation_previous_disabled);
 				crtanjeView.bringToFront();
 				crtanjeView.nacrtajnamCanvas(bip);
 				return false;
