@@ -4,16 +4,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
-
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Bitmap.CompressFormat;
 import android.os.Environment;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -22,7 +20,7 @@ import android.view.View;
 public class CrtanjeView extends View {
 
 	public static Paint boja;
-	public Boolean mijenjan=false;
+	public Boolean mijenjan = false;
 	public static mojaPutanja putanja;
 	private Paint krugBoja;
 	private Path krugPutanja;
@@ -31,11 +29,10 @@ public class CrtanjeView extends View {
 	public static ArrayList<mojaPutanja> undonePaths = new ArrayList<mojaPutanja>();
 	public static Bitmap MyBitmap;
 	public Canvas mCanvas;
-	Bitmap kojiKoristimo=null;
+	Bitmap kojiKoristimo = null;
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		// TODO Auto-generated method stub
 		MyBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
 		mCanvas = new Canvas(MyBitmap);
 		mCanvas.drawColor(Color.WHITE);
@@ -43,48 +40,36 @@ public class CrtanjeView extends View {
 	}
 
 	private void inicijalizacija(Context k) {
-		// // Inicijalizacija varijabli poput boje, boje kruga, putanje i sl.
-		// stvari //////
-
 		boja = new Paint();
 		krugBoja = new Paint();
 		krugPutanja = new Path();
 
 	}
-	public void osvjezi()
-	{
+
+	public void osvjezi() {
 		postInvalidate();
 	}
-	
+
 	public void ocistiFunkcija() {
-		//Klikom na erase button, poziva se ocistiFunkcija koja brise trenutne pathove na
-		//canvasu
-		
 		Log.d("hepek", "pozvano");
 		for (mojaPutanja p : paths) {
 			p.reset();
 		}
 		mCanvas.drawColor(Color.WHITE);
-		mijenjan=true;
+		mijenjan = true;
 		postInvalidate();
 	}
 
 	private void postaviKist() {
 
-		// ///////// Postavljanje kista //////////
-
 		boja.setAntiAlias(true);
 		boja.setColor(Color.BLUE);
-		// Da boja bude kist:
 		boja.setStyle(Paint.Style.STROKE);
-		// Da kist bude okruglog oblika:
 		boja.setStrokeJoin(Paint.Join.ROUND);
-		// Debljina kista
 		boja.setStrokeWidth(5f);
 		putanja = new mojaPutanja(new Paint(boja));
 		paths.add(putanja);
 
-		// ///////// Postavljanje kruga oko kista //////////
 		krugBoja.setAntiAlias(true);
 		krugBoja.setColor(Color.CYAN);
 		krugBoja.setStyle(Paint.Style.STROKE);
@@ -97,13 +82,14 @@ public class CrtanjeView extends View {
 		inicijalizacija(k);
 		postaviKist();
 	}
-	
-	public void spreminamStranicu(int brstr){
+
+	public void spreminamStranicu(int brstr) {
 		File gdjeSnimiti = new File(Environment.getExternalStorageDirectory()
 				+ "/HIVE/Books/");
-		if(!gdjeSnimiti.exists()) gdjeSnimiti.mkdirs();
+		if (!gdjeSnimiti.exists())
+			gdjeSnimiti.mkdirs();
 		File nesto = new File(Environment.getExternalStorageDirectory()
-				+ "/HIVE/Books/"+Glavna.obradjujemo+"/"+ brstr +".jpg");
+				+ "/HIVE/Books/" + Glavna.obradjujemo + "/" + brstr + ".jpg");
 		FileOutputStream ostream;
 		try {
 			nesto.createNewFile();
@@ -115,10 +101,9 @@ public class CrtanjeView extends View {
 			e.printStackTrace();
 		}
 	}
-	
-	public void nacrtajnamCanvas(Bitmap str){
-		kojiKoristimo=str;
-		//mCanvas=new Canvas(str);
+
+	public void nacrtajnamCanvas(Bitmap str) {
+		kojiKoristimo = str;
 		mCanvas.drawBitmap(str, 0, 0, null);
 	}
 
@@ -137,7 +122,7 @@ public class CrtanjeView extends View {
 
 		float tackaX = e.getX();
 		float tackaY = e.getY();
-		mijenjan=true;
+		mijenjan = true;
 
 		switch (e.getAction()) {
 		case MotionEvent.ACTION_DOWN:

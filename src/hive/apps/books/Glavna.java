@@ -26,7 +26,6 @@ import android.widget.LinearLayout.LayoutParams;
 public class Glavna extends Activity implements OnClickListener,
 		OnLongClickListener {
 
-	private Button openButton;
 	private LinearLayout drzacPolica;
 	private LinearLayout polica;
 	private ArrayList<LinearLayout> police = new ArrayList<LinearLayout>();
@@ -230,7 +229,6 @@ public class Glavna extends Activity implements OnClickListener,
 
 	@Override
 	public boolean onLongClick(View arg0) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -241,9 +239,10 @@ public class Glavna extends Activity implements OnClickListener,
 		for (File stranica : stranice) {
 			if (stranica.isFile()) {
 				BitmapFactory.Options options = new BitmapFactory.Options();
-				  options.inSampleSize = 0;
-				  Bitmap bmpStranica = BitmapFactory.decodeFile(stranica.getAbsolutePath(), options);
-				
+				options.inSampleSize = 0;
+				Bitmap bmpStranica = BitmapFactory.decodeFile(
+						stranica.getAbsolutePath(), options);
+
 				// Bitmap bmpStranica = BitmapFactory.decodeFile(stranica
 				// .getAbsolutePath());
 				nizStranica.add(bmpStranica);
@@ -254,7 +253,6 @@ public class Glavna extends Activity implements OnClickListener,
 
 	@Override
 	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
 		MyButton trenutno = (MyButton) arg0;
 		for (int i = 0; i < knjige.size(); i++) {
 			if (knjige.get(i).imeKnjige.toString().equals(
