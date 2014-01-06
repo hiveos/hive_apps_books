@@ -12,19 +12,24 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.ViewFlipper;
 
 public class PageScroller extends Activity {
 
 	private Menu menu;
-
-	ViewFlipper viewFlipper;
-	public Boolean isEditable;
-	CrtanjeView crtanjeView;
-	Bitmap bip;
-	int brr = 0;
-
+	ImageView Stranica;
+	Bitmap izgledStranice;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,55 +39,33 @@ public class PageScroller extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		isEditable = false;
-		viewFlipper = (ViewFlipper) findViewById(R.id.view_flipper);
-		crtanjeView = (CrtanjeView) findViewById(R.id.crtanje);
-		postaviViewFlipper();
+		Stranica = (ImageView) findViewById(R.id.imageView1);
+		PhotoViewAttacher mAttacher = new PhotoViewAttacher(Stranica);
+		postaviStranicu();
 	}
 
-	int sirina;
-	int visina;
-
-	public void postaviViewFlipper() {
-		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		brr = 0;
-		for (int i = 0; i < Glavna.nizStranica.size(); i++) {
-			View view = inflater.inflate(R.layout.flip_lay, viewFlipper, false);
-			ImageView slika = (ImageView) view.findViewById(R.id.slikaStranice);
-			bip = Glavna.nizStranica.get(i);
-			slika.setImageBitmap(bip);
-			viewFlipper.addView(view);
-			PhotoViewAttacher mAttacher = new PhotoViewAttacher(slika);
-			/*
-			 * slika.setOnTouchListener(new OnSwipeTouchListener() { public void
-			 * onSwipeTop() { } public void onSwipeRight() { desno(); } public
-			 * void onSwipeLeft() { lijevo(); } public void onSwipeBottom() { }
-			 * });
-			 */
-		}
+	void postaviStranicu() {
+		Stranica.setImageBitmap(Glavna.bmpStranica);
 	}
 
 	public void lijevo() {
-		if (!isEditable) {
-			brr++;
-			crtanjeView.ocistiFunkcija();
-			viewFlipper.setOutAnimation(this, R.anim.out_to_left);
-			viewFlipper.setInAnimation(this, R.anim.in_from_right);
-			viewFlipper.showNext();
+		Glavna.strNaKojojSeNalazimo++;
+		Log.d("NALAZIMO SE NA: ", Glavna.strNaKojojSeNalazimo+"");
+		if (Glavna.strNaKojojSeNalazimo <= Glavna.stranice.length) {
+			Glavna.ucitajStranice();
+			postaviStranicu();
 		}
+		else Glavna.strNaKojojSeNalazimo=Glavna.stranice.length;
 	}
 
 	public void desno() {
-		if (brr > 0)
-			brr--;
-		else
-			brr = Glavna.nizStranica.size();
-		if (!isEditable) {
-			crtanjeView.ocistiFunkcija();
-			viewFlipper.setOutAnimation(this, R.anim.out_to_right);
-			viewFlipper.setInAnimation(this, R.anim.in_from_left);
-			viewFlipper.showPrevious();
+		Glavna.strNaKojojSeNalazimo--;
+		Log.d("NALAZIMO SE NA: ", Glavna.strNaKojojSeNalazimo+"");
+		if(Glavna.strNaKojojSeNalazimo>=1){
+			Glavna.ucitajStranice();
+			postaviStranicu();
 		}
+		else Glavna.strNaKojojSeNalazimo=1;
 	}
 
 	@Override
@@ -106,36 +89,11 @@ public class PageScroller extends Activity {
 
 		switch (item.getItemId()) {
 		case R.id.action_previous:
-			viewFlipper.setOutAnimation(this, R.anim.out_to_right);
-			viewFlipper.setInAnimation(this, R.anim.in_from_left);
-			viewFlipper.showPrevious();
+			desno();
 			return true;
 		case R.id.action_next:
-			viewFlipper.setOutAnimation(this, R.anim.out_to_left);
-			viewFlipper.setInAnimation(this, R.anim.in_from_right);
-			viewFlipper.showNext();
+			lijevo();
 			return true;
-		case R.id.action_edit:
-			if (isEditable == true) {
-				isEditable = false;
-				nextItem.setEnabled(true);
-				nextItem.setIcon(R.drawable.ic_navigation_next);
-				previousItem.setEnabled(true);
-				previousItem.setIcon(R.drawable.ic_navigation_previous);
-				crtanjeView.spreminamStranicu(brr + 1);
-				postaviViewFlipper();
-				return true;
-			}
-			if (!isEditable) {
-				isEditable = true;
-				nextItem.setEnabled(false);
-				nextItem.setIcon(R.drawable.ic_navigation_next_disabled);
-				previousItem.setEnabled(false);
-				previousItem.setIcon(R.drawable.ic_navigation_previous_disabled);
-				crtanjeView.bringToFront();
-				crtanjeView.nacrtajnamCanvas(bip);
-				return false;
-			}
 		case R.id.action_fullscreen:
 			if (!isImmersiveModeEnabled) {
 				fullscreenItem.setIcon(R.drawable.ic_navigation_expand);

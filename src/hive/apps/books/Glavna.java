@@ -46,8 +46,10 @@ public class Glavna extends Activity implements OnClickListener,
 	private String foldernoIme;
 	public static String obradjujemo = "";
 	public static File path;
-	public File[] stranice;
+	public static File[] stranice;
 	private LinearLayout emptyspace;
+	static int strNaKojojSeNalazimo = 1;
+	static Bitmap bmpStranica;
 
 	View selectedItem;
 
@@ -105,6 +107,7 @@ public class Glavna extends Activity implements OnClickListener,
 	}
 
 	private void inicijaliziraj() {
+		bmpStranica=null;
 		sdCard = Environment.getExternalStorageDirectory().toString();
 		policaCounter = 0;
 		drzacPolica = (LinearLayout) findViewById(R.id.ShelfHolder);
@@ -232,21 +235,16 @@ public class Glavna extends Activity implements OnClickListener,
 		return false;
 	}
 
-	public void ucitajStranice() {
+	public static void ucitajStranice() {
 		stranice = path.listFiles();
 		System.out.println(stranice.length + "");
-
-		for (File stranica : stranice) {
-			if (stranica.isFile()) {
-				BitmapFactory.Options options = new BitmapFactory.Options();
-				options.inSampleSize = 0;
-				Bitmap bmpStranica = BitmapFactory.decodeFile(
-						stranica.getAbsolutePath(), options);
-
-				// Bitmap bmpStranica = BitmapFactory.decodeFile(stranica
-				// .getAbsolutePath());
-				nizStranica.add(bmpStranica);
-			}
+		int counter = 0;
+		if (stranice[strNaKojojSeNalazimo - 1].isFile()) {
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inSampleSize = 0;
+			bmpStranica = BitmapFactory.decodeFile(
+					stranice[strNaKojojSeNalazimo - 1].getAbsolutePath(),
+					options);
 		}
 		System.out.println(nizStranica.size() + " ");
 	}

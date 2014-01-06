@@ -4,16 +4,14 @@
     android:layout_height="match_parent"
     tools:context=".PageScroller" >
 
-    <hive.apps.books.CrtanjeView
-        android:id="@+id/crtanje"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <ViewFlipper
-        android:id="@+id/view_flipper"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1" >
-    </ViewFlipper>
-
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_launcher" />
+    
 </RelativeLayout>
