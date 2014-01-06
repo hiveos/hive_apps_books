@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -24,16 +25,18 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-public class PageScroller extends Activity {
+public class PageScroller extends Activity implements OnClickListener{
 
 	private Menu menu;
 	ImageView Stranica;
 	Bitmap izgledStranice;
+	Button nextButton, previousButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,10 @@ public class PageScroller extends Activity {
 	protected void onResume() {
 		super.onResume();
 		Stranica = (ImageView) findViewById(R.id.imageView1);
+		nextButton=(Button)findViewById(R.id.buttonNext);
+		previousButton=(Button)findViewById(R.id.buttonPrevious);
+		nextButton.setOnClickListener(this);
+		previousButton.setOnClickListener(this);
 		PhotoViewAttacher mAttacher = new PhotoViewAttacher(Stranica);
 		postaviStranicu();
 	}
@@ -174,5 +181,19 @@ public class PageScroller extends Activity {
 		}
 
 		getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch(v.getId()){
+		case R.id.buttonNext:
+			lijevo();
+			break;
+		case R.id.buttonPrevious:
+			desno();
+			break;
+		default: break;
+		
+		}
 	}
 }
