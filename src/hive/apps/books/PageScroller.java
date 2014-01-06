@@ -3,10 +3,13 @@ package hive.apps.books;
 import uk.co.senab.photoview.PhotoViewAttacher;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,7 +24,9 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 public class PageScroller extends Activity {
@@ -104,12 +109,41 @@ public class PageScroller extends Activity {
 				fullscreenItem.setTitle("Hide System Bars");
 				toggleImmersive();
 			}
-
+			return true;
+		case R.id.action_goTo:
+			postaviDialog();
 			return true;
 		default:
 			return false;
 
 		}
+	}
+
+	private void postaviDialog() {
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Jump to page:");
+		// Create TextView
+		final EditText input = new EditText (this);
+		input.setInputType(InputType.TYPE_CLASS_NUMBER);
+		alert.setView(input);
+
+		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+		public void onClick(DialogInterface dialog, int whichButton) {
+			Glavna.strNaKojojSeNalazimo = Integer.parseInt(input.getText().toString());
+			if(Glavna.strNaKojojSeNalazimo>1 && Glavna.strNaKojojSeNalazimo<=Glavna.stranice.length){
+				Glavna.ucitajStranice();
+				postaviStranicu();
+			}
+		  }
+		});
+
+		  alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		  public void onClick(DialogInterface dialog, int whichButton) {
+		      // Canceled.
+		  }
+		});
+		alert.show();
+		
 	}
 
 	public void toggleImmersive() {

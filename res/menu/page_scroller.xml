@@ -16,6 +16,12 @@
         android:icon="@drawable/ic_navigation_collapse"
         android:orderInCategory="100"
         android:showAsAction="always"
+        android:title="Go To"/>
+    
+    <item
+        android:id="@+id/action_goTo"
+        android:orderInCategory="100"
+        android:showAsAction="always"
         android:title="Fullscreen"/>
 
 </menu>
