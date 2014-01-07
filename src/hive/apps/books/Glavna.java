@@ -2,6 +2,8 @@ package hive.apps.books;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -107,7 +109,7 @@ public class Glavna extends Activity implements OnClickListener,
 	}
 
 	private void inicijaliziraj() {
-		bmpStranica=null;
+		bmpStranica = null;
 		sdCard = Environment.getExternalStorageDirectory().toString();
 		policaCounter = 0;
 		drzacPolica = (LinearLayout) findViewById(R.id.ShelfHolder);
@@ -235,8 +237,29 @@ public class Glavna extends Activity implements OnClickListener,
 		return false;
 	}
 
+	public int uporediMe(Object a, Object b) {
+		return Float.valueOf(a.toString()).compareTo(
+				Float.valueOf(b.toString()));
+	}
+
 	public static void ucitajStranice() {
 		stranice = path.listFiles();
+		Arrays.sort(stranice);
+		
+		for (int i = 0; i < stranice.length; i++) {
+		    for (int x = 1; x < stranice.length - i; x++) {
+		        if (Integer.parseInt(stranice[x - 1].getName().substring(0, stranice[x - 1].getName().lastIndexOf('.'))  )>Integer.parseInt(stranice[x].getName().substring(0, stranice[x].getName().lastIndexOf('.')))){
+		            File temp = stranice[x - 1];
+		            stranice[x - 1] = stranice[x];
+		            stranice[x] = temp;
+
+		        }
+		    }
+		  }
+		
+		
+		
+		
 		System.out.println(stranice.length + "");
 		int counter = 0;
 		if (stranice[strNaKojojSeNalazimo - 1].isFile()) {
