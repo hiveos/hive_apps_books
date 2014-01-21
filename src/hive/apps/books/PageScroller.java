@@ -108,11 +108,11 @@ public class PageScroller extends Activity implements OnClickListener{
 			return true;
 		case R.id.action_fullscreen:
 			if (!isImmersiveModeEnabled) {
-				fullscreenItem.setIcon(R.drawable.ic_navigation_expand);
+				fullscreenItem.setIcon(R.drawable.ic_disable_fullscreen);
 				fullscreenItem.setTitle("Show System Bars");
 				toggleImmersive();
 			} else if (isImmersiveModeEnabled) {
-				fullscreenItem.setIcon(R.drawable.ic_navigation_collapse);
+				fullscreenItem.setIcon(R.drawable.ic_fullscreen);
 				fullscreenItem.setTitle("Hide System Bars");
 				toggleImmersive();
 			}
