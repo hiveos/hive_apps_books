@@ -243,7 +243,7 @@ public class Stranica extends ImageView {
 		@Override
 		public boolean onScale(ScaleGestureDetector detector) {
 			mScaleFactor *= detector.getScaleFactor();
-			mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 10.0f));
+			mScaleFactor = Math.max(1f, Math.min(mScaleFactor, 10.0f));
 			invalidate();
 			return true;
 		}
