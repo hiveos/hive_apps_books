@@ -19,6 +19,12 @@
         android:title="Fullscreen"/>
     
     <item
+        android:id="@+id/action_switch"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="Switch mode"/>
+    
+    <item
         android:id="@+id/action_goTo"
         android:orderInCategory="100"
         android:showAsAction="always"

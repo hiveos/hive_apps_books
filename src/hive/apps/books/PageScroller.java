@@ -34,9 +34,10 @@ import android.widget.ViewFlipper;
 public class PageScroller extends Activity implements OnClickListener{
 
 	private Menu menu;
-	ImageView Stranica;
-	Bitmap izgledStranice;
+	Stranica stranicaView;
+	static Bitmap izgledStranice;
 	Button nextButton, previousButton;
+	static Boolean drawing = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,17 +48,17 @@ public class PageScroller extends Activity implements OnClickListener{
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Stranica = (ImageView) findViewById(R.id.imageView1);
+		stranicaView = (Stranica)findViewById(R.id.stranicaView);
 		nextButton=(Button)findViewById(R.id.buttonNext);
 		previousButton=(Button)findViewById(R.id.buttonPrevious);
 		nextButton.setOnClickListener(this);
 		previousButton.setOnClickListener(this);
-		PhotoViewAttacher mAttacher = new PhotoViewAttacher(Stranica);
+		//PhotoViewAttacher mAttacher = new PhotoViewAttacher(stranicaView);
 		postaviStranicu();
 	}
 
 	void postaviStranicu() {
-		Stranica.setImageBitmap(Glavna.bmpStranica);
+		stranicaView.setImageBitmap(Glavna.bmpStranica);
 	}
 
 	public void lijevo() {
@@ -68,6 +69,7 @@ public class PageScroller extends Activity implements OnClickListener{
 			postaviStranicu();
 		}
 		else Glavna.strNaKojojSeNalazimo=Glavna.stranice.length;
+		Stranica.paths.clear();
 	}
 
 	public void desno() {
@@ -78,6 +80,7 @@ public class PageScroller extends Activity implements OnClickListener{
 			postaviStranicu();
 		}
 		else Glavna.strNaKojojSeNalazimo=1;
+		Stranica.paths.clear();
 	}
 
 	@Override
@@ -115,6 +118,14 @@ public class PageScroller extends Activity implements OnClickListener{
 				fullscreenItem.setIcon(R.drawable.ic_fullscreen);
 				fullscreenItem.setTitle("Hide System Bars");
 				toggleImmersive();
+			}
+			return true;
+		case R.id.action_switch:
+			if(drawing){
+				drawing=false;
+			}
+			else{
+				drawing=true;
 			}
 			return true;
 		case R.id.action_goTo:

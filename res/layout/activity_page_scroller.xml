@@ -4,16 +4,15 @@
     android:layout_height="match_parent"
     tools:context=".PageScroller" >
     
-    <ImageView
-        android:id="@+id/imageView1"
+    <hive.apps.books.Stranica
+        android:id="@+id/stranicaView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_weight="1"
-        android:src="@drawable/ic_launcher" />
+        android:layout_weight="1" />
 
     <Button
         android:id="@+id/buttonNext"
