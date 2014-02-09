@@ -22,7 +22,7 @@ public class Stranica extends ImageView {
 	private Path krugPutanja;
 	public static ArrayList<mojaPutanja> paths = new ArrayList<mojaPutanja>();
 	public static Bitmap MyBitmap;
-	private Canvas mCanvas;
+	public static Canvas mCanvas;
 	private static final int INVALID_POINTER_ID = -1;
 	Rect clipBounds;
 	private float mPozicijaX;
@@ -35,6 +35,14 @@ public class Stranica extends ImageView {
 
 	private ScaleGestureDetector mScaleDetector;
 	private float mScaleFactor = 1.f;
+
+	@Override
+	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+		// TODO Auto-generated method stub
+		super.onSizeChanged(w, h, oldw, oldh);
+		MyBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+		mCanvas = new Canvas(MyBitmap);
+	}
 
 	public Stranica(Context context) {
 		super(context);
@@ -70,7 +78,6 @@ public class Stranica extends ImageView {
 	private void postaviKist() {
 
 		// ///////// Postavljanje kista //////////
-
 		boja.setAntiAlias(true);
 		boja.setColor(Color.BLUE);
 		// Da boja bude kist:
@@ -92,15 +99,22 @@ public class Stranica extends ImageView {
 
 	protected void onDraw(Canvas canvas) {
 		canvas.save();
+		canvas.drawBitmap(MyBitmap, 0, 0, null);
+		//mCanvas.save();
 
 		canvas.translate(mPozicijaX, mPozicijaY);
+		//mCanvas.translate(mPozicijaX, mPozicijaY);
 
 		if (mScaleDetector.isInProgress()) {
 			canvas.scale(mScaleFactor, mScaleFactor,
 					mScaleDetector.getFocusX(), mScaleDetector.getFocusY());
+			//mCanvas.scale(mScaleFactor, mScaleFactor,
+			//		mScaleDetector.getFocusX(), mScaleDetector.getFocusY());
 		} else {
 			canvas.scale(mScaleFactor, mScaleFactor, mZadnjaGesturaX,
 					mZadnjaGesturaY);
+			//mCanvas.scale(mScaleFactor, mScaleFactor,
+			//		mScaleDetector.getFocusX(), mScaleDetector.getFocusY());
 		}
 		super.onDraw(canvas);
 		for (mojaPutanja p : paths) {

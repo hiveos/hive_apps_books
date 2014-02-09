@@ -1,59 +1,54 @@
 package hive.apps.books;
 
-import uk.co.senab.photoview.PhotoViewAttacher;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.InputType;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.ViewFlipper;
 
-public class PageScroller extends Activity implements OnClickListener{
+public class PageScroller extends Activity implements OnClickListener {
 
 	private Menu menu;
 	Stranica stranicaView;
 	static Bitmap izgledStranice;
 	Button nextButton, previousButton;
 	static Boolean drawing = false;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_page_scroller);
+		ucitajStranicu(1);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		stranicaView = (Stranica)findViewById(R.id.stranicaView);
-		nextButton=(Button)findViewById(R.id.buttonNext);
-		previousButton=(Button)findViewById(R.id.buttonPrevious);
+		stranicaView = (Stranica) findViewById(R.id.stranicaView);
+		nextButton = (Button) findViewById(R.id.buttonNext);
+		previousButton = (Button) findViewById(R.id.buttonPrevious);
 		nextButton.setOnClickListener(this);
 		previousButton.setOnClickListener(this);
-		//PhotoViewAttacher mAttacher = new PhotoViewAttacher(stranicaView);
+		// PhotoViewAttacher mAttacher = new PhotoViewAttacher(stranicaView);
 		postaviStranicu();
 	}
 
@@ -61,26 +56,64 @@ public class PageScroller extends Activity implements OnClickListener{
 		stranicaView.setImageBitmap(Glavna.bmpStranica);
 	}
 
+	void spremiStranicu(int brStranice) {
+		File gdjeSpremiti = new File(Environment.getExternalStorageDirectory()
+				+ "/HIVE/Book_Drawings/");
+		if (!gdjeSpremiti.exists())
+			gdjeSpremiti.mkdirs();
+		File stranica = new File(Environment.getExternalStorageDirectory()
+				+ "/HIVE/Book_Drawings/page" + brStranice + ".png");
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream(stranica);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Stranica.MyBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+		Stranica.mCanvas.drawColor(Color.WHITE, PorterDuff.Mode.CLEAR);
+	}
+
+	void ucitajStranicu(int brStranice) {
+		File odakleUcitati = new File(Environment.getExternalStorageDirectory()
+				+ "/HIVE/Book_Drawings/");
+		if (!odakleUcitati.exists())
+			odakleUcitati.mkdirs();
+		File stranica = new File(Environment.getExternalStorageDirectory()
+				+ "/HIVE/Book_Drawings/page" + brStranice + ".png");
+
+		Stranica.MyBitmap = BitmapFactory
+				.decodeFile(stranica.getAbsolutePath());
+		Bitmap mutableBitmap = Stranica.MyBitmap.copy(Bitmap.Config.ARGB_8888,
+				true);
+		Stranica.mCanvas = new Canvas(mutableBitmap);
+
+	}
+
 	public void lijevo() {
+		spremiStranicu(Glavna.strNaKojojSeNalazimo);
 		Glavna.strNaKojojSeNalazimo++;
-		Log.d("NALAZIMO SE NA: ", Glavna.strNaKojojSeNalazimo+"");
+		Log.d("NALAZIMO SE NA: ", Glavna.strNaKojojSeNalazimo + "");
 		if (Glavna.strNaKojojSeNalazimo <= Glavna.stranice.length) {
 			Glavna.ucitajStranice();
 			postaviStranicu();
-		}
-		else Glavna.strNaKojojSeNalazimo=Glavna.stranice.length;
+		} else
+			Glavna.strNaKojojSeNalazimo = Glavna.stranice.length;
 		Stranica.paths.clear();
+		ucitajStranicu(Glavna.strNaKojojSeNalazimo);
 	}
 
 	public void desno() {
+		spremiStranicu(Glavna.strNaKojojSeNalazimo);
 		Glavna.strNaKojojSeNalazimo--;
-		Log.d("NALAZIMO SE NA: ", Glavna.strNaKojojSeNalazimo+"");
-		if(Glavna.strNaKojojSeNalazimo>=1){
+		Log.d("NALAZIMO SE NA: ", Glavna.strNaKojojSeNalazimo + "");
+		if (Glavna.strNaKojojSeNalazimo >= 1) {
 			Glavna.ucitajStranice();
 			postaviStranicu();
-		}
-		else Glavna.strNaKojojSeNalazimo=1;
+		} else
+			Glavna.strNaKojojSeNalazimo = 1;
 		Stranica.paths.clear();
+		ucitajStranicu(Glavna.strNaKojojSeNalazimo);
 	}
 
 	@Override
@@ -121,11 +154,10 @@ public class PageScroller extends Activity implements OnClickListener{
 			}
 			return true;
 		case R.id.action_switch:
-			if(drawing){
-				drawing=false;
-			}
-			else{
-				drawing=true;
+			if (drawing) {
+				drawing = false;
+			} else {
+				drawing = true;
 			}
 			return true;
 		case R.id.action_goTo:
@@ -141,27 +173,30 @@ public class PageScroller extends Activity implements OnClickListener{
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("Jump to page:");
 		// Create TextView
-		final EditText input = new EditText (this);
+		final EditText input = new EditText(this);
 		input.setInputType(InputType.TYPE_CLASS_NUMBER);
 		alert.setView(input);
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int whichButton) {
-			Glavna.strNaKojojSeNalazimo = Integer.parseInt(input.getText().toString());
-			if(Glavna.strNaKojojSeNalazimo>1 && Glavna.strNaKojojSeNalazimo<=Glavna.stranice.length){
-				Glavna.ucitajStranice();
-				postaviStranicu();
+			public void onClick(DialogInterface dialog, int whichButton) {
+				Glavna.strNaKojojSeNalazimo = Integer.parseInt(input.getText()
+						.toString());
+				if (Glavna.strNaKojojSeNalazimo > 1
+						&& Glavna.strNaKojojSeNalazimo <= Glavna.stranice.length) {
+					Glavna.ucitajStranice();
+					postaviStranicu();
+				}
 			}
-		  }
 		});
 
-		  alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		  public void onClick(DialogInterface dialog, int whichButton) {
-		      // Canceled.
-		  }
-		});
+		alert.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						// Canceled.
+					}
+				});
 		alert.show();
-		
+
 	}
 
 	public void toggleImmersive() {
@@ -196,15 +231,16 @@ public class PageScroller extends Activity implements OnClickListener{
 
 	@Override
 	public void onClick(View v) {
-		switch(v.getId()){
+		switch (v.getId()) {
 		case R.id.buttonNext:
 			lijevo();
 			break;
 		case R.id.buttonPrevious:
 			desno();
 			break;
-		default: break;
-		
+		default:
+			break;
+
 		}
 	}
 }
