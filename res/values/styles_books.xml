@@ -38,7 +38,6 @@
     <style name="Theme.Books.TransculentSystemBars" parent="Theme.Books">
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowTranslucentStatus">true</item>
-        
     </style>
 
     <style name="Theme.Books.TransculentNavigationBar" parent="Theme.Books">
@@ -85,6 +84,14 @@
 
     <style name="ActionButton.CloseMode.Books" parent="@android:style/Widget.Holo.ActionButton.CloseMode">
         <item name="android:background">@drawable/btn_cab_done_books</item>
+    </style>
+
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-thin</item>
+    </style>
+
+    <style name="RobotoTextViewStyleLight" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->

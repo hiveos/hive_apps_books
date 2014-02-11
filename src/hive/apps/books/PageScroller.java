@@ -79,6 +79,7 @@ public class PageScroller extends Activity implements OnClickListener {
 				+ "/HIVE/Book_Drawings/");
 		if (!odakleUcitati.exists())
 			odakleUcitati.mkdirs();
+		
 		File stranica = new File(Environment.getExternalStorageDirectory()
 				+ "/HIVE/Book_Drawings/page" + brStranice + ".png");
 
