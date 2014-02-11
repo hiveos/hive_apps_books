@@ -52,6 +52,7 @@ public class Glavna extends Activity implements OnClickListener,
 	private LinearLayout emptyspace;
 	static int strNaKojojSeNalazimo = 1;
 	static Bitmap bmpStranica;
+	static Bitmap LoadaniDrawing;
 
 	View selectedItem;
 
