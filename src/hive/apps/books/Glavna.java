@@ -3,7 +3,6 @@ package hive.apps.books;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -258,11 +257,7 @@ public class Glavna extends Activity implements OnClickListener,
 		    }
 		  }
 		
-		
-		
-		
 		System.out.println(stranice.length + "");
-		int counter = 0;
 		if (stranice[strNaKojojSeNalazimo - 1].isFile()) {
 			BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inSampleSize = 0;
