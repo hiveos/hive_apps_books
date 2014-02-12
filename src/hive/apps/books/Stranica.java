@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.widget.ImageView;
@@ -32,9 +33,10 @@ public class Stranica extends ImageView {
 	private float mZadnjaGesturaX;
 	private float mZadnjaGesturaY;
 	private int mActivePointerId = INVALID_POINTER_ID;
-
 	private ScaleGestureDetector mScaleDetector;
 	private float mScaleFactor = 1.f;
+	private float visinaStranice;
+	private float sirinaStranice;
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -42,6 +44,9 @@ public class Stranica extends ImageView {
 		super.onSizeChanged(w, h, oldw, oldh);
 		MyBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
 		mCanvas = new Canvas(MyBitmap);
+		visinaStranice = Glavna.bmpStranica.getHeight();
+		sirinaStranice = Glavna.bmpStranica.getWidth();
+
 	}
 
 	public Stranica(Context context) {
@@ -76,19 +81,13 @@ public class Stranica extends ImageView {
 
 	private void postaviKist() {
 
-		// ///////// Postavljanje kista //////////
 		boja.setAntiAlias(true);
 		boja.setColor(Color.BLUE);
-		// Da boja bude kist:
 		boja.setStyle(Paint.Style.STROKE);
-		// Da kist bude okruglog oblika:
 		boja.setStrokeJoin(Paint.Join.ROUND);
-		// Debljina kista
 		boja.setStrokeWidth(2f);
 		putanja = new mojaPutanja(new Paint(boja));
 		paths.add(putanja);
-
-		// ///////// Postavljanje kruga oko kista //////////
 		krugBoja.setAntiAlias(true);
 		krugBoja.setColor(Color.CYAN);
 		krugBoja.setStyle(Paint.Style.STROKE);
@@ -97,22 +96,23 @@ public class Stranica extends ImageView {
 	}
 
 	protected void onDraw(Canvas canvas) {
+		Log.d("isRecycled", Glavna.LoadaniDrawing.isRecycled()+"");
 		canvas.save();
-		// mCanvas.save();
 
-		canvas.translate(mPozicijaX, mPozicijaY);
-		// mCanvas.translate(mPozicijaX, mPozicijaY);
+		if (mScaleFactor > 1.0)
+			canvas.translate(mPozicijaX, mPozicijaY);
+		else
+			canvas.translate(0, 0);
 
 		if (mScaleDetector.isInProgress()) {
+			Log.d("mScaleFactor: ", mScaleFactor + "");
+			Log.d("mScaleDetectorX", mScaleDetector.getFocusX() + "");
+			Log.d("mScaleDetector", mScaleDetector.getFocusY() + "");
 			canvas.scale(mScaleFactor, mScaleFactor,
 					mScaleDetector.getFocusX(), mScaleDetector.getFocusY());
-			// mCanvas.scale(mScaleFactor, mScaleFactor,
-			// mScaleDetector.getFocusX(), mScaleDetector.getFocusY());
 		} else {
 			canvas.scale(mScaleFactor, mScaleFactor, mZadnjaGesturaX,
 					mZadnjaGesturaY);
-			// mCanvas.scale(mScaleFactor, mScaleFactor,
-			// mScaleDetector.getFocusX(), mScaleDetector.getFocusY());
 		}
 		super.onDraw(canvas);
 		if (!Glavna.LoadaniDrawing.isRecycled()) {
@@ -185,44 +185,48 @@ public class Stranica extends ImageView {
 			}
 			case MotionEvent.ACTION_MOVE: {
 
-				// Only move if the ScaleGestureDetector isn't processing a
-				// gesture.
-				if (!mScaleDetector.isInProgress()) {
-					final int pointerIndex = e
-							.findPointerIndex(mActivePointerId);
-					final float x = e.getX(pointerIndex);
-					final float y = e.getY(pointerIndex);
+				if (mScaleFactor > 1.0) {
+					if (!mScaleDetector.isInProgress()) {
+						Log.d("mScaleFactor", mScaleFactor + "");
+						final int pointerIndex = e
+								.findPointerIndex(mActivePointerId);
+						final float x = e.getX(pointerIndex);
+						final float y = e.getY(pointerIndex);
 
-					final float dx = x - mZadnjiDodirX;
-					final float dy = y - mZadnjiDodirY;
+						final float dx = x - mZadnjiDodirX;
+						final float dy = y - mZadnjiDodirY;
 
-					mPozicijaX += dx;
-					mPozicijaY += dy;
+						mPozicijaX += dx;
+						mPozicijaY += dy;
 
-					invalidate();
+						invalidate();
 
-					mZadnjiDodirX = x;
-					mZadnjiDodirY = y;
-				} else {
-					final float gx = mScaleDetector.getFocusX();
-					final float gy = mScaleDetector.getFocusY();
+						mZadnjiDodirX = x;
+						mZadnjiDodirY = y;
+					} else {
+						final float gx = mScaleDetector.getFocusX();
+						final float gy = mScaleDetector.getFocusY();
 
-					final float gdx = gx - mZadnjaGesturaX;
-					final float gdy = gy - mZadnjaGesturaY;
+						final float gdx = gx - mZadnjaGesturaX;
+						final float gdy = gy - mZadnjaGesturaY;
 
-					mPozicijaX += gdx;
-					mPozicijaY += gdy;
+						mPozicijaX += gdx;
+						mPozicijaY += gdy;
 
-					invalidate();
+						invalidate();
 
-					mZadnjaGesturaX = gx;
-					mZadnjaGesturaY = gy;
+						mZadnjaGesturaX = gx;
+						mZadnjaGesturaY = gy;
+						mPozicijaX = 0;
+						mPozicijaY = 0;
+					}
 				}
 
 				break;
 			}
 			case MotionEvent.ACTION_UP: {
 				mActivePointerId = INVALID_POINTER_ID;
+
 				break;
 			}
 			case MotionEvent.ACTION_CANCEL: {

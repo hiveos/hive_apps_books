@@ -30,6 +30,12 @@
         <item name="android:actionModeBackground">@drawable/cab_background_top_books</item>
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_books</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Books</item>
+        <item name="ptrProgressBarColor">#CCFFFFFF</item>
+        <item name="ptrHeaderTitleTextAppearance">@style/RobotoTextViewStyleLight</item>
+        <item name="ptrProgressBarStyle">inside</item>
+        <item name="ptrPullText">@string/ptr_pull_text</item>
+        <item name="ptrRefreshingText">@string/ptr_refreshing_text</item>
+        <item name="ptrReleaseText">@string/ptr_release_text</item>
 
         <!-- Light.DarkActionBar specific -->
         <item name="android:actionBarWidgetTheme">@style/Theme.Books.Widget</item>
@@ -84,6 +90,14 @@
 
     <style name="ActionButton.CloseMode.Books" parent="@android:style/Widget.Holo.ActionButton.CloseMode">
         <item name="android:background">@drawable/btn_cab_done_books</item>
+    </style>
+
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-thin</item>
+    </style>
+
+    <style name="RobotoTextViewStyleLight" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">

@@ -1,8 +1,10 @@
 package hive.apps.books;
 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -38,7 +40,6 @@ public class PageScroller extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_page_scroller);
 		ucitajStranicu(1);
-		//ucitajStranicu(1,getActionBar().getTitle().toString());
 	}
 
 	@Override
@@ -49,7 +50,7 @@ public class PageScroller extends Activity implements OnClickListener {
 		previousButton = (Button) findViewById(R.id.buttonPrevious);
 		nextButton.setOnClickListener(this);
 		previousButton.setOnClickListener(this);
-		// PhotoViewAttacher mAttacher = new PhotoViewAttacher(stranicaView);
+		ucitajStranicu(Glavna.strNaKojojSeNalazimo);
 		postaviStranicu();
 	}
 
@@ -83,10 +84,12 @@ public class PageScroller extends Activity implements OnClickListener {
 		
 		File stranica = new File(Environment.getExternalStorageDirectory()
 				+ "/HIVE/Book_Drawings/"+Glavna.obradjujemo+"/page" + brStranice + ".png");
-		if(stranica.exists())
-			Glavna.LoadaniDrawing = BitmapFactory.decodeFile(stranica.getAbsolutePath());
-		else{
-			Glavna.LoadaniDrawing = Glavna.LoadaniDrawing.createBitmap(10, 10, Bitmap.Config.ARGB_8888);
+		if (stranica.exists())
+			Glavna.LoadaniDrawing = BitmapFactory.decodeFile(stranica
+					.getAbsolutePath());
+		else {
+			Glavna.LoadaniDrawing = Bitmap.createBitmap(10, 10,
+					Bitmap.Config.ARGB_8888);
 			Glavna.LoadaniDrawing.recycle();
 		}
 	}
@@ -161,6 +164,7 @@ public class PageScroller extends Activity implements OnClickListener {
 				drawing = false;
 			} else {
 				drawing = true;
+				Stranica.paths.add(Stranica.putanja);
 			}
 			return true;
 		case R.id.action_goTo:
@@ -184,7 +188,6 @@ public class PageScroller extends Activity implements OnClickListener {
 	private void postaviDialog() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("Jump to page:");
-		// Create TextView
 		final EditText input = new EditText(this);
 		input.setInputType(InputType.TYPE_CLASS_NUMBER);
 		alert.setView(input);

@@ -10,6 +10,9 @@
     <string name="title_activity_pdfview">PDFview</string>
     <string name="title_activity_page_scroller">PageScroller</string>
     <string name="title_activity_settings">SETTINGS</string>
+    <string name="ptr_pull_text">Pull to refresh...</string>
+    <string name="ptr_refreshing_text">Synchronizing books...</string>
+    <string name="ptr_release_text">Release to refresh!</string>
 
     <!-- SETTINGS STRINGS -->
 
