@@ -359,8 +359,9 @@ public class Glavna extends Activity implements OnClickListener,
 		@Override
 		protected String doInBackground(String... params) {
 			HiveHelper mHiveHelper = new HiveHelper();
-			String FetchUrl = "http://hive.bluedream.info/api/"
-					+ mHiveHelper.getUniqueId() + "/books";
+			String FetchUrl = getResources().getString(R.string.api_base)
+					+ mHiveHelper.getUniqueId()
+					+ getResources().getString(R.string.api_list_book);
 
 			if (isNetworkAvailable()) {
 				try {
@@ -403,9 +404,8 @@ public class Glavna extends Activity implements OnClickListener,
 					mBookIds.add(mBooks[i].substring(
 							mBooks[i].indexOf("id=") + 3,
 							mBooks[i].indexOf(",name")));
-					mBookNames.add(mBooks[i].substring(
-							mBooks[i].indexOf("name=") + 5,
-							mBooks[i].indexOf(",cover")));
+					mBookNames.add(mBooks[i].substring(mBooks[i]
+							.indexOf("name=") + 5));
 					isEmpty = false;
 				}
 			}
