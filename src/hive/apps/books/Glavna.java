@@ -73,6 +73,7 @@ public class Glavna extends Activity implements OnClickListener,
 	public static File[] stranice;
 	static int strNaKojojSeNalazimo = 1;
 	static Bitmap bmpStranica;
+	static Bitmap LoadaniDrawing;
 
 	View selectedItem;
 

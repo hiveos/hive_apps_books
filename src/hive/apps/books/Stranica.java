@@ -72,7 +72,6 @@ public class Stranica extends ImageView {
 		boja = new Paint();
 		krugBoja = new Paint();
 		krugPutanja = new Path();
-		mCanvas = new Canvas();
 	}
 
 	private void postaviKist() {
@@ -99,24 +98,27 @@ public class Stranica extends ImageView {
 
 	protected void onDraw(Canvas canvas) {
 		canvas.save();
-		canvas.drawBitmap(MyBitmap, 0, 0, null);
-		//mCanvas.save();
+		// mCanvas.save();
 
 		canvas.translate(mPozicijaX, mPozicijaY);
-		//mCanvas.translate(mPozicijaX, mPozicijaY);
+		// mCanvas.translate(mPozicijaX, mPozicijaY);
 
 		if (mScaleDetector.isInProgress()) {
 			canvas.scale(mScaleFactor, mScaleFactor,
 					mScaleDetector.getFocusX(), mScaleDetector.getFocusY());
-			//mCanvas.scale(mScaleFactor, mScaleFactor,
-			//		mScaleDetector.getFocusX(), mScaleDetector.getFocusY());
+			// mCanvas.scale(mScaleFactor, mScaleFactor,
+			// mScaleDetector.getFocusX(), mScaleDetector.getFocusY());
 		} else {
 			canvas.scale(mScaleFactor, mScaleFactor, mZadnjaGesturaX,
 					mZadnjaGesturaY);
-			//mCanvas.scale(mScaleFactor, mScaleFactor,
-			//		mScaleDetector.getFocusX(), mScaleDetector.getFocusY());
+			// mCanvas.scale(mScaleFactor, mScaleFactor,
+			// mScaleDetector.getFocusX(), mScaleDetector.getFocusY());
 		}
 		super.onDraw(canvas);
+		if (!Glavna.LoadaniDrawing.isRecycled()) {
+			canvas.drawBitmap(Glavna.LoadaniDrawing, 0, 0, null);
+			mCanvas.drawBitmap(Glavna.LoadaniDrawing, 0, 0, null);
+		}
 		for (mojaPutanja p : paths) {
 			canvas.drawPath(p, p.bojaPutanje);
 			mCanvas.drawPath(p, p.bojaPutanje);

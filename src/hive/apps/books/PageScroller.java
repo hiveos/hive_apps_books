@@ -38,6 +38,7 @@ public class PageScroller extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_page_scroller);
 		ucitajStranicu(1);
+		//ucitajStranicu(1,getActionBar().getTitle().toString());
 	}
 
 	@Override
@@ -58,11 +59,11 @@ public class PageScroller extends Activity implements OnClickListener {
 
 	void spremiStranicu(int brStranice) {
 		File gdjeSpremiti = new File(Environment.getExternalStorageDirectory()
-				+ "/HIVE/Book_Drawings/");
+				+ "/HIVE/Book_Drawings/"+Glavna.obradjujemo+"/");
 		if (!gdjeSpremiti.exists())
 			gdjeSpremiti.mkdirs();
 		File stranica = new File(Environment.getExternalStorageDirectory()
-				+ "/HIVE/Book_Drawings/page" + brStranice + ".png");
+				+ "/HIVE/Book_Drawings/"+Glavna.obradjujemo+"/page" + brStranice + ".png");
 		FileOutputStream fos = null;
 		try {
 			fos = new FileOutputStream(stranica);
@@ -76,21 +77,20 @@ public class PageScroller extends Activity implements OnClickListener {
 
 	void ucitajStranicu(int brStranice) {
 		File odakleUcitati = new File(Environment.getExternalStorageDirectory()
-				+ "/HIVE/Book_Drawings/");
+				+ "/HIVE/Book_Drawings/"+Glavna.obradjujemo+"/");
 		if (!odakleUcitati.exists())
 			odakleUcitati.mkdirs();
 		
 		File stranica = new File(Environment.getExternalStorageDirectory()
-				+ "/HIVE/Book_Drawings/page" + brStranice + ".png");
-
-		Stranica.MyBitmap = BitmapFactory
-				.decodeFile(stranica.getAbsolutePath());
-		Bitmap mutableBitmap = Stranica.MyBitmap.copy(Bitmap.Config.ARGB_8888,
-				true);
-		Stranica.mCanvas = new Canvas(mutableBitmap);
-
+				+ "/HIVE/Book_Drawings/"+Glavna.obradjujemo+"/page" + brStranice + ".png");
+		if(stranica.exists())
+			Glavna.LoadaniDrawing = BitmapFactory.decodeFile(stranica.getAbsolutePath());
+		else{
+			Glavna.LoadaniDrawing = Glavna.LoadaniDrawing.createBitmap(10, 10, Bitmap.Config.ARGB_8888);
+			Glavna.LoadaniDrawing.recycle();
+		}
 	}
-
+	
 	public void lijevo() {
 		spremiStranicu(Glavna.strNaKojojSeNalazimo);
 		Glavna.strNaKojojSeNalazimo++;
@@ -98,6 +98,7 @@ public class PageScroller extends Activity implements OnClickListener {
 		if (Glavna.strNaKojojSeNalazimo <= Glavna.stranice.length) {
 			Glavna.ucitajStranice();
 			postaviStranicu();
+			ucitajStranicu(Glavna.strNaKojojSeNalazimo);
 		} else
 			Glavna.strNaKojojSeNalazimo = Glavna.stranice.length;
 		Stranica.paths.clear();
@@ -111,6 +112,7 @@ public class PageScroller extends Activity implements OnClickListener {
 		if (Glavna.strNaKojojSeNalazimo >= 1) {
 			Glavna.ucitajStranice();
 			postaviStranicu();
+			ucitajStranicu(Glavna.strNaKojojSeNalazimo);
 		} else
 			Glavna.strNaKojojSeNalazimo = 1;
 		Stranica.paths.clear();
@@ -168,6 +170,15 @@ public class PageScroller extends Activity implements OnClickListener {
 			return false;
 
 		}
+	}
+	
+	
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		spremiStranicu(Glavna.strNaKojojSeNalazimo);
+		super.onStop();
 	}
 
 	private void postaviDialog() {
