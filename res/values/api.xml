@@ -6,5 +6,8 @@
     <string name="api_delete_book">/delete/book</string>
     <string name="api_add_book">/add/book</string>
     <string name="api_edit_book">/edit/book</string>
+    <string name="api_edit_book">/edit/book</string>
+    <string name="api_pull_book">/pull/book</string>
+    <string name="api_push_book">/push/book</string>
 
 </resources>

@@ -32,6 +32,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -279,7 +280,7 @@ public class Glavna extends Activity implements OnClickListener,
 
 	private void loadajKnjige() {
 		for (int i = 0; i < mBooks.length; i++) {
-				isNeededToLoad = true;
+			isNeededToLoad = true;
 			dodajKnjigu(i);
 		}
 
@@ -298,21 +299,21 @@ public class Glavna extends Activity implements OnClickListener,
 	public static void ucitajStranice() {
 		stranice = path.listFiles();
 		Arrays.sort(stranice);
-		
-		for (int i = 0; i < stranice.length; i++) {
-		    for (int x = 1; x < stranice.length - i; x++) {
-				if (Integer.parseInt(stranice[x - 1].getName().substring(0,
-						stranice[x - 1].getName().lastIndexOf('.'))) > Integer
-						.parseInt(stranice[x].getName().substring(0,
-								stranice[x].getName().lastIndexOf('.')))) {
-		            File temp = stranice[x - 1];
-		            stranice[x - 1] = stranice[x];
-		            stranice[x] = temp;
 
-		        }
-		    }
-		  }
-		
+		// for (int i = 0; i < stranice.length; i++) {
+		// for (int x = 1; x < stranice.length - i; x++) {
+		// if (Integer.parseInt(stranice[x - 1].getName().substring(0,
+		// stranice[x - 1].getName().lastIndexOf('.'))) > Integer
+		// .parseInt(stranice[x].getName().substring(0,
+		// stranice[x].getName().lastIndexOf('.')))) {
+		// File temp = stranice[x - 1];
+		// stranice[x - 1] = stranice[x];
+		// stranice[x] = temp;
+		//
+		// }
+		// }
+		// }
+
 		System.out.println(stranice.length + "");
 		int counter = 0;
 		if (stranice[strNaKojojSeNalazimo - 1].isFile()) {
@@ -349,6 +350,16 @@ public class Glavna extends Activity implements OnClickListener,
 		NetworkInfo activeNetworkInfo = connectivityManager
 				.getActiveNetworkInfo();
 		return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+	}
+
+	private void addBooks() {
+		inicijaliziraj();
+
+		for (int i = 0; i < 5; i++)
+			dodajPolicu();
+
+		if (brojKnjigaZaLoadati != 0)
+			loadajKnjige();
 	}
 
 	private class FetchTask extends AsyncTask<String, Integer, String> {
@@ -434,22 +445,11 @@ public class Glavna extends Activity implements OnClickListener,
 			super.onPostExecute(result);
 			if (isNetworkAvailable()) {
 				if (!isEmpty) {
-					addNotebooks();
+					new downloadTask().execute();
 				} else {
 					displayNoNotebooks();
 				}
 			}
-			mPullToRefreshLayout.setRefreshComplete();
-		}
-
-		private void addNotebooks() {
-			inicijaliziraj();
-
-			for (int i = 0; i < 5; i++)
-				dodajPolicu();
-
-			if (brojKnjigaZaLoadati != 0)
-				loadajKnjige();
 		}
 
 		private void displayNoNotebooks() {
@@ -460,6 +460,72 @@ public class Glavna extends Activity implements OnClickListener,
 					// NoNotebook.setVisibility(View.VISIBLE);
 				}
 			});
+		}
+
+	}
+
+	public class downloadTask extends AsyncTask<String, Void, File> {
+
+		int id;
+
+		@Override
+		protected File doInBackground(String... arg0) {
+			HiveHelper mHiveHelper = new HiveHelper();
+			String url = getResources().getString(R.string.api_base)
+					+ mHiveHelper.getUniqueId()
+					+ getResources().getString(R.string.api_pull_book);
+
+			File tempDir = new File(Environment.getExternalStorageDirectory()
+					+ "/HIVE/Temp");
+
+			File downloadedBook = null;
+
+			for (int i = 0; i <= mBooks.length; i++) {
+				try {
+					HttpRequest request = HttpRequest.post(url).send(
+							"item=" + mBookIds.get(i));
+
+					if (request.ok()) {
+						downloadedBook = new File(
+								Environment.getExternalStorageDirectory()
+										+ "/HIVE/Temp/" + mBookIds.get(i)
+										+ ".zip");
+
+						if (!tempDir.exists())
+							tempDir.mkdirs();
+
+						request.receive(downloadedBook);
+						savePackage(downloadedBook, i);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}
+
+			return downloadedBook;
+		}
+
+		@Override
+		protected void onPostExecute(File file) {
+			super.onPostExecute(file);
+			addBooks();
+			mPullToRefreshLayout.setRefreshComplete();
+		}
+
+		private void savePackage(File packagename, int i) {
+			File extractTo = new File(Environment.getExternalStorageDirectory()
+					+ "/HIVE/Books/" + mBookIds.get(i));
+			if (!extractTo.exists()) {
+				extractTo.mkdirs();
+			}
+
+			try {
+				Zipper.unzip(packagename, extractTo);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
 		}
 
 	}
