@@ -102,6 +102,7 @@ public class Glavna extends Activity implements OnClickListener,
 				.listener(this).setup(mPullToRefreshLayout);
 
 		new FetchTask().execute();
+		mPullToRefreshLayout.setRefreshing(true);
 
 	}
 
