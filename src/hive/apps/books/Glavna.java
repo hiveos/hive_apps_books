@@ -76,6 +76,8 @@ public class Glavna extends Activity implements OnClickListener,
 	static Bitmap bmpStranica;
 	static Bitmap LoadaniDrawing;
 
+	public static String mBookName;
+
 	View selectedItem;
 
 	private int ItemId;
@@ -331,8 +333,10 @@ public class Glavna extends Activity implements OnClickListener,
 		for (int i = 0; i < mBooks.length; i++) {
 			if (mBookNames.get(i).equals(bookTitle.getText().toString())) {
 				obradjujemo = mBookIds.get(i);
+				mBookName = mBookNames.get(i);
 			}
 		}
+
 		path = new File(Environment.getExternalStorageDirectory()
 				+ "/HIVE/Books/" + obradjujemo + "/");
 		ucitajStranice();
