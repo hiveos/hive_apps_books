@@ -104,6 +104,10 @@ public class Glavna extends Activity implements OnClickListener,
 		new FetchTask().execute();
 		mPullToRefreshLayout.setRefreshing(true);
 
+		getActionBar().setIcon(null);
+		getActionBar().setDisplayUseLogoEnabled(false);
+		getActionBar().setTitle(
+				getResources().getString(R.string.app_name).toUpperCase());
 	}
 
 	@Override
