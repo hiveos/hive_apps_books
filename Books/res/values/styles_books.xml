@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     File created by the Android Action Bar Style Generator
+
+     Copyright (C) 2011 The Android Open Source Project
+     Copyright (C) 2012 readyState Software Ltd
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+
+
+
+
+-->
+
+<resources>
+
+    <style name="Theme.Books" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_books</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu.Books</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Books</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Books</item>
+        <item name="android:actionDropDownStyle">@style/DropDownNav.Books</item>
+        <item name="android:actionBarStyle">@style/ActionBar.Solid.Books</item>
+        <item name="android:actionModeBackground">@drawable/cab_background_top_books</item>
+        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_books</item>
+        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Books</item>
+        <item name="ptrProgressBarColor">#CCFFFFFF</item>
+        <item name="ptrHeaderTitleTextAppearance">@style/RobotoTextViewStyleLight</item>
+        <item name="ptrProgressBarStyle">inside</item>
+        <item name="ptrPullText">@string/ptr_pull_text</item>
+        <item name="ptrRefreshingText">@string/ptr_refreshing_text</item>
+        <item name="ptrReleaseText">@string/ptr_release_text</item>
+
+        <!-- Light.DarkActionBar specific -->
+        <item name="android:actionBarWidgetTheme">@style/Theme.Books.Widget</item>
+    </style>
+
+    <style name="Theme.Books.TransculentSystemBars" parent="Theme.Books">
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="Theme.Books.TransculentNavigationBar" parent="Theme.Books">
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <style name="Theme.Books.TransculentStatusBar" parent="Theme.Books">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="ActionBar.Solid.Books" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@drawable/ab_solid_books</item>
+        <item name="android:backgroundStacked">@drawable/ab_stacked_solid_books</item>
+        <item name="android:backgroundSplit">@drawable/ab_bottom_solid_books</item>
+        <item name="android:progressBarStyle">@style/ProgressBar.Books</item>
+        <item name="android:titleTextStyle">@style/ActionBar.TitleTextStyle</item>
+    </style>
+
+    <style name="ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">#CCFFFFFF</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">26sp</item>
+    </style>
+
+    <style name="ActionBar.Transparent.Books" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:background">@drawable/ab_transparent_books</item>
+        <item name="android:progressBarStyle">@style/ProgressBar.Books</item>
+    </style>
+
+    <style name="PopupMenu.Books" parent="@android:style/Widget.Holo.ListPopupWindow">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_books</item>
+    </style>
+
+    <style name="DropDownListView.Books" parent="@android:style/Widget.Holo.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_books</item>
+    </style>
+
+    <style name="ActionBarTabStyle.Books" parent="@android:style/Widget.Holo.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_books</item>
+    </style>
+
+    <style name="DropDownNav.Books" parent="@android:style/Widget.Holo.Spinner">
+        <item name="android:background">@drawable/spinner_background_ab_books</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_books</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_books</item>
+    </style>
+
+    <style name="ProgressBar.Books" parent="@android:style/Widget.Holo.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_books</item>
+    </style>
+
+    <style name="ActionButton.CloseMode.Books" parent="@android:style/Widget.Holo.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_books</item>
+    </style>
+
+    <style name="RobotoTextViewStyleLight" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-thin</item>
+    </style>
+
+    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
+    <style name="Theme.Books.Widget" parent="@android:style/Theme.Holo">
+        <item name="android:popupMenuStyle">@style/PopupMenu.Books</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Books</item>
+    </style>
+
+</resources>
