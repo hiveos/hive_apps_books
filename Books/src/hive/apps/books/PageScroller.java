@@ -53,6 +53,12 @@ public class PageScroller extends Activity implements OnClickListener {
 		postaviStranicu();
 	}
 
+    @Override
+    public boolean onNavigateUp() {
+        super.onBackPressed();
+        return false;
+    }
+
 	void postaviStranicu() {
 		stranicaView.setImageBitmap(Glavna.bmpStranica);
 	}
