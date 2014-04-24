@@ -271,7 +271,7 @@ public class Glavna extends Activity implements OnClickListener,
 					LayoutParams.WRAP_CONTENT);
 			bookParams.leftMargin = 15;
 			bookParams.rightMargin = 15;
-			bookParams.bottomMargin = 0;
+			bookParams.bottomMargin = 65;
 			bookParams.topMargin = 0;
 			police.get(policaNaKojojSeNalazimo).addView(
 					knjige.get(ukupniKnjigaCounter - 1), bookParams);
